@@ -1,0 +1,44 @@
+class Solution {
+public:
+  bool canPartitionKSubsets(vector<int>& nums, int k) {
+    int target = accumulate(nums.begin(), nums.end(), 0);
+    if(target % k) return false;
+    target /= k;
+    if(*max_element(nums.begin(), nums.end())>target) return false;
+    
+    int size = nums.size();
+    vector<bool> picked(size, false);
+    
+    return doDFS(nums, target, target, k, 0, picked);
+  }
+  
+  bool doDFS(const vector<int>& nums, 
+             const int target,
+             const int curTarget,
+             const int k,
+             const int index,
+             vector<bool>& picked) {
+    
+    // k == 0 or k ==1 are the same, but k==1 saves one more iteration as it's always correct
+    if(k == 1)  return true;
+    
+    // once we found a match, we start another level of the recursion immediately!
+    // This is the key that it can break and return false, then the upper layer stacks can pick up and try other earlier combinations!!
+    if(curTarget == 0) {
+      return doDFS(nums, target, target, k-1, 0, picked);
+    }
+    
+    for(int i=index; i<nums.size(); ++i) {
+      if(picked[i]) continue;
+      if(curTarget < nums[i]) continue;
+      
+      picked[i] = true;
+      if(doDFS(nums, target, curTarget - nums[i], k, i+1, picked)) return true;
+      picked[i] = false;
+    }
+    
+    return false;
+    
+  }
+  
+};
