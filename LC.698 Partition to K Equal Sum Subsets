@@ -23,7 +23,8 @@ public:
     if(k == 1)  return true;
     
     // once we found a match, we start another level of the recursion immediately!
-    // This is the key that it can break and return false, then the upper layer stacks can pick up and try other earlier combinations!!
+    // This is the key that it can break and return false, 
+    // then the upper layer stacks can pick up and try other earlier combinations!!
     if(curTarget == 0) {
       return doDFS(nums, target, target, k-1, 0, picked);
     }
