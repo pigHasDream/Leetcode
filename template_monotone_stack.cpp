@@ -7,8 +7,13 @@ void monotoneStack(vector<int>& A) {
 
   for(int i=1; i<A.size(); ++i) {
     while(stc.size() and A[i] > A[stc.top()]) {
-
+      auto top = stc.top();
+      stc.pop();
+      // do something
     }
+    // do something;
+    stc.emplace(A[i]);
   }
 
+  return;
 }

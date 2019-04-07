@@ -1,5 +1,6 @@
 
 int partition(vector<int>& A, const int left, const int right) {
+
   const int pivot = arr[left];
     
   int i = left + 1;
@@ -19,6 +20,7 @@ int partition(vector<int>& A, const int left, const int right) {
 }
 
 void quicksort(vector<int>& A, const int left, const int right){
+
   if (left >= right) return;
 
   int pivot = partition(A, left, right);
