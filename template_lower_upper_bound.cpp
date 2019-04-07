@@ -3,8 +3,10 @@
 #include <vector>
 using namespace std;
  
+// Note that the template uses [left, right)
 int upper_bound(const vector<int>& A, int val, int l, int r) {
   while (l < r) {
+    // l + (r-l)/2 is to avoid possible overlow!!
     int m = l + (r - l) / 2;
     if (A[m] > val)
       r = m;
