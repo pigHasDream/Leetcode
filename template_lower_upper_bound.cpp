@@ -9,6 +9,7 @@ int upper_bound(const vector<int>& A, int val, int l, int r) {
   while (l < r) {
     // l + (r-l)/2 is to avoid possible overlow!!
     int m = l + (r - l) / 2;
+    // below is g(m). If g(m) is satisfied, we always do below to find the min left satisfying the g(m)!
     if (A[m] > val)
       r = m;
     else      
