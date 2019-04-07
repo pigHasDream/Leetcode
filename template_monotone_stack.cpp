@@ -17,3 +17,4 @@ void monotoneStack(vector<int>& A) {
 
   return;
 }
+
