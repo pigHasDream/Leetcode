@@ -1,2 +1,1 @@
-# Leetcode
-Recording my Leetcode practices
+Record my Leetcode road map.
