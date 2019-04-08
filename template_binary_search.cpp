@@ -4,6 +4,7 @@ int doBinarySearch(int left, int right) {
   // [left, right)
   
   while(left < right) {
+    
     const int mid = left + (right - left)/2;
 
     // optional, find and return immediately
