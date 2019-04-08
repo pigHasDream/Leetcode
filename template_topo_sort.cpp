@@ -3,7 +3,6 @@ public:
   bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
     
     // topo sort has O(n) time complexity.
-    // status vector records if a node is currently in stack or already completed visited.
     // use 1 for completed visited.
     // use 0 for currently visiting, i.e., in stack.
     // use -1 as unknown status.
@@ -15,17 +14,18 @@ public:
     // And another dimension as the out edges
     vector<vector<int>> graph(numCourses, vector<int>());
     
-    for(auto& thePair : prerequisites) 
+    for(const auto& thePair : prerequisites) 
       graph[thePair.second].emplace_back(thePair.first);
       
     for(int i=0; i<graph.size(); ++i) 
-      if(!doDFS(graph, status, i))
-        return false;
+      if(!doDFS(graph, status, i)) return false;
     
     return true;
   }
   
-  bool doDFS(vector<vector<int>>& graph, vector<int>& status, int curNode) {
+  bool doDFS(const vector<vector<int>>& graph, 
+             vector<int>& status, 
+             int curNode) {
     
     // already visited, ok.
     if(status[curNode] == 1) return true;
@@ -43,7 +43,7 @@ public:
     // mark curNode as visited
     status[curNode] = 1;
 
-    // topo order needs to insert the curNode to the head of vector.
+    // topo order needs to insert the curNode to the head.
     // i.e., first visited node ranked last.
     topoOrder_.insert(0, curNode);
     
