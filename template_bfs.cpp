@@ -14,7 +14,7 @@ void doBFS() {
       for(const auto& out : top.outNodes){
         // may skip visited nodes (with loop)
         // or update values for visited (no loop)
-        que.emplace_back(top.next);
+        que.emplace_back(out);
       }
     }
   }
