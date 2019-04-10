@@ -6,15 +6,13 @@ vector<int> postorderTraversal(TreeNode* root) {
   st.push({root, false});
   
   while(st.size()) {
-    auto top = st.top();
+    auto rt = st.top().first;
+    auto visit = st.top().second;
     st.pop();
+        
+    if(rt == nullptr) continue;
     
-    // empty node
-    if(top.first == nullptr)
-      continue;
-    
-    // has been visited
-    if(top.second) {
+    if(visit) {
       res.emplace_back(rt->val);
     }
     else {
