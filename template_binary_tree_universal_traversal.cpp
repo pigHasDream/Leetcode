@@ -5,7 +5,7 @@ vector<int> postorderTraversal(TreeNode* root) {
   
   theSt.push({root, false});
   
-  while(not theSt.empty()) {
+  while(theSt.size()) {
     auto rt = theSt.top().first;
     auto visit = theSt.top().second;
     theSt.pop();
