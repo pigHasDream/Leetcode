@@ -1,19 +1,20 @@
 
 vector<int> postorderTraversal(TreeNode* root) {
   vector<int> res;
-  stack<pair<TreeNode*, bool>> theSt;
+  // {TreeNode*, visit}
+  stack<pair<TreeNode*, bool>> st;
+  st.push({root, false});
   
-  theSt.push({root, false});
-  
-  while(theSt.size()) {
-    auto rt = theSt.top().first;
-    auto visit = theSt.top().second;
-    theSt.pop();
+  while(st.size()) {
+    auto top = st.top();
+    st.pop();
     
-    if(rt == nullptr)
+    // empty node
+    if(top.first == nullptr)
       continue;
     
-    if(visit) {
+    // has been visited
+    if(top.second) {
       res.emplace_back(rt->val);
     }
     else {
