@@ -26,3 +26,4 @@
     
     return res == inf ? -1 : res;
   }
+
