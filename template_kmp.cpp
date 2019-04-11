@@ -1,51 +1,47 @@
-//Title of this code
-
 #include <iostream>
 #include <string>
 #include <vector>
-
-
 using namespace std;
 
-
-/*
+/***************************************
 
 char:  | a | b | a | b | a | b | c | a |
 index: | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 
 value: | 0 | 0 | 1 | 2 | 3 | 4 | 0 | 1 |
 
-The length of the longest proper prefix in the (sub)pattern that matches a proper suffix in the same (sub)pattern.
+The length of the longest proper prefix 
+in the (sub)pattern that matches a 
+proper suffix in the same (sub)pattern.
 
 A A A C A A A A
 0 1 2 0 1 2 3 3
 
-
-*/
-
+***************************************/
 
 void computeLPS(string& pattern, vector<int>& lps) {
-    int len = 0;  // lenght of the previous longest prefix suffix
-    lps[0] = 0; // lps[0] is always 0
-    int i = 1;
- 
-    // the loop calculates lps[i] for i = 1 to M-1
-    while (i < pattern.length()) {
-        if (pattern[i] == pattern[len]) {
-            ++len;
-            lps[i] = len;
-            ++i;
-        } else {
-            if (len != 0) {
-                // This is tricky. Consider the example AAACAAAA and i = 7.
-                len = lps[len - 1];
- 
-                // Also, note that we do not increment i here
-            } else {
-                lps[i] = 0;
-                ++i;
-            }
-       }
+  // LPS: longest prefix also a surfix
+  int len = 0;  // lenght of the previous longest prefix suffix
+  lps[0] = 0; // lps[0] is always 0
+  int i = 1;
+
+  // the loop calculates lps[i] for i = 1 to M-1
+  while (i < pattern.length()) {
+    if (pattern[i] == pattern[len]) {
+      ++len;
+      lps[i] = len;
+      ++i;
+    } else {
+      if (len != 0) {
+        // This is tricky. Consider the example AAACAAAA and i = 7.
+        len = lps[len - 1];
+
+        // Also, note that we do not increment i here
+      } else {
+        lps[i] = 0;
+        ++i;
+      }
     }
+  }
 } 
 
 int KMPSearch(string& pattern, string& str) {
