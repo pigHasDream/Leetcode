@@ -3,8 +3,8 @@
 int doKruskalMST() { 
 
   // edge cost first, then two nodes
-	// {cost, {u, v}}
-	vector<pair<int, pair<int, int>>> edges;
+  // {cost, {u, v}}
+  vector<pair<int, pair<int, int>>> edges;
   int res = 0;
   
   // sort ascending based on first in pair
