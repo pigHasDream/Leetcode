@@ -21,3 +21,4 @@ std::accumulate
 std::fill
 std::fill_n
 std::count_if
+std::iota
