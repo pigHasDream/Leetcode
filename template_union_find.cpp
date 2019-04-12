@@ -2,8 +2,7 @@
 class UnionFindSet {
 public:
   UnionFindSet(int n): parent_(n, 0), ranks_(n, 0) {
-    for (int i = 0; i < parents_.size(); ++i)
-      parents_[i] = i;
+    std::iota(parent_.begin(), parent_.end(), 0);
   }
   
   bool Union(int u, int v) {
