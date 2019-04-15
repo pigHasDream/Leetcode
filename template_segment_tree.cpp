@@ -1,7 +1,7 @@
 /*********************************************************************************
 Segment tree is a balanced binary tree with O(logn) height given n input segments.
 Segment tree supports fast range query O(logn + k), and update O(logn).
-Building such a tree takes O(n) time if the input is an array of numbers.
+Building such a tree takes O(nlog(n)) time and space.
 
 All leaf nodes stores the original num array.
 Tree is built up upon the range index, recursively.

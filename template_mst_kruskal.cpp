@@ -1,5 +1,9 @@
 
-// return mst's edge sum
+// MST is defined in undirected graph.
+// UnionFind on undirected graph is sufficient
+// to tell a loop if both nodes are union already.
+
+// This API returns mst's edge sum
 int doKruskalMST() { 
 
   // edge cost first, then two nodes
