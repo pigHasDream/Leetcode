@@ -33,6 +33,20 @@ struct ListNode {
 };
 
 // -----------------------------------------------------
+// Trie node
+struct TrieNode {
+
+  TrieNode(): isWord_(false), children_(26, nullptr) {}
+  ~TrieNode() {
+    for(auto cptr : children_)
+      delete cptr; 
+  }
+
+  bool isWord_;
+  vector<TrieNode*> children_;
+};
+
+// -----------------------------------------------------
 // segment tree node
 class segTreeNode {
   public:
