@@ -1,3 +1,7 @@
+// topo sort can detect DIRECTED graph loop.
+// UN-DIRECTED graph loop: union-find
+// or DFS with visit() check but not father node!
+
 class Solution {
 public:
   bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
