@@ -3,8 +3,8 @@
 unordered_map<int, vector<pair<int,int>>> graph_;
 
 // -----------------------------------------------------
-// graph: if all nodes are int index, use vector
-vector<int, vector<pair<int,int>>> graph_;
+// graph: if all nodes are int index use vector directly
+vector<vector<pair<int,int>>> graph_;
 
 // -----------------------------------------------------
 // graph: MST, {edgeCost, {startNode, endNode}}
