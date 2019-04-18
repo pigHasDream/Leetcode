@@ -7,7 +7,7 @@ void doBFS() {
   while(que.size()) {
     for(int i=que.size(); i>0; --i) {
       auto top = que.front(); 
-      que.pop_front();
+      que.pop();
 
       // do something based on the 'top'.
 
