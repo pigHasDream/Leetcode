@@ -11,7 +11,7 @@ int doBinarySearch(int left, int right) {
     if(f(mid)) return mid; 
 
     // if satisfy g(mid), continue getting the min one
-    if(g(mid) { 
+    if(g(mid)) { 
       // do the right [left, mid)
       right = mid;
     }
@@ -21,6 +21,6 @@ int doBinarySearch(int left, int right) {
     }
   }
 
-  return left // or not found
+  return left; // or not found
 }
        

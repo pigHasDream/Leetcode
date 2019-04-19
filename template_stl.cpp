@@ -4,6 +4,7 @@ std::binary_search
 std::nth_element
 
 // BidirIt partition( BidirIt first, BidirIt last, UnaryPredicate p );
+// returns iterator to the first element of the second group.
 // O(N)
 std::partition
 std::stable_partition
