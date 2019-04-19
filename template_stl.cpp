@@ -13,6 +13,8 @@ std::next_permutation
 std::prev_permutation
 std::merge
 std::inplace_merge
+std::set_uion
+std::back_inserter
 std::rotate
 std::min_element
 std::max_element
