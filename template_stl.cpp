@@ -23,3 +23,4 @@ std::fill_n
 std::count_if
 std::iota
 std::unique_ptr
+std::list // doubly-linked list
