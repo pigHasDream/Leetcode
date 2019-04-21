@@ -10,10 +10,10 @@ vector<int> inorderTraversal(TreeNode* root) {
       rt = rt->left;
     }
 
-    rt = st.top();
-    st.pop();
-    res.emplace_back(rt->val);
-    rt = rt->right;
+    auto top = st.top(); st.pop();
+    rt = top->right;
+    // do something to the popped top elem
+    res.emplace_back(top->val);
   }
 
   return res;
