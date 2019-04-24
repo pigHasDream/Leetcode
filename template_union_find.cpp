@@ -11,6 +11,9 @@ public:
     if (pu == pv) 
       return false;
 
+    // NOTE!!
+    // The updates are all on pu or pv!!
+    
     if(ranks_[pu] < ranks_[pv]) {
       parent_[pu] = pv;
     }
@@ -30,6 +33,14 @@ public:
       parents_[u] = Find(parents_[u]);        
 
     return parents_[u];
+  }
+
+  int CountUnion() {
+    int count = 0;
+    for(const auto& i : parent_) 
+      if(Find(i) == i) ++count;
+
+    return count;
   }
 
 private:
