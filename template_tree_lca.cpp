@@ -25,8 +25,8 @@ TreeNode* LCA(TreeNode* root, TreeNode* p, TreeNode* q) {
   if(root == nullptr or root == p or root == q) 
     return root;
   
-  auto left = lowestCommonAncestor(root->left, p, q);
-  auto right = lowestCommonAncestor(root->right, p, q);
+  auto left = LCA(root->left, p, q);
+  auto right = LCA(root->right, p, q);
   
   return (left and right) ? root 
                           : left ? left : right;
