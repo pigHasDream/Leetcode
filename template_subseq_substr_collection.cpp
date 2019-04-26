@@ -20,7 +20,8 @@ int lengthOfLIS(vector<int>& nums) {
 
 // ---------------
 
-// N^2 typical DP: 2 level
+// N^2 typical DP: 2 level loop,
+// 1-D space. 
 int lengthOfLIS(vector<int>& nums) {
 
   int size = nums.size();
