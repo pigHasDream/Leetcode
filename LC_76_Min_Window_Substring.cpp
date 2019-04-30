@@ -3,6 +3,7 @@ public:
   string minWindow(string s, string t) {
     // General template is to use hashmap with 2 pointers
     // This is a typical way to solve sliding window
+    // Use a counter for the condition check
     
     vector<int> theMap(128, 0);
     int size = s.size();
