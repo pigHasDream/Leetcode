@@ -1,6 +1,8 @@
 class Solution {
 public:
   string minWindow(string s, string t) {
+    // General template is to use hashmap with 2 pointers
+    // This is a typical way to solve sliding window
     
     vector<int> theMap(128, 0);
     int size = s.size();
@@ -27,4 +29,5 @@ public:
     
     return head == INT_MAX ? "" : s.substr(head, minLen);  
   }
+
 };
