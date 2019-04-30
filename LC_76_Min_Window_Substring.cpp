@@ -17,12 +17,14 @@ public:
     int left = 0;
     
     for(int right = 0; right < size; ++right) {
+      // Note here is >= 0
       if(--theMap[s[right]] >= 0) ++count;
       while(count == t.size()) {
         if(minLen > right - left + 1) {
           minLen = right - left + 1;
           head = left;
         }
+        // note here is > 0
         if(++theMap[s[left]] > 0) --count;
         ++left;
       }
