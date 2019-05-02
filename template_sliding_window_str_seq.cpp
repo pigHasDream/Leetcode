@@ -17,7 +17,9 @@
 // Basically: right pointer is to make valid;
 // left pointer is to get minimum
 
-// LC_76, LC_340, LC_209
+// LC_76, LC_340, LC_209, LC_904
+// LC_904 is opposite to the condition as it's 
+// for maximum
 
 int findSubstring(string s){
 
