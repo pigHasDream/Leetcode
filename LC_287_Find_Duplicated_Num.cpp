@@ -30,4 +30,31 @@ public:
     
     return slow;
   }
+
+  int findDuplicate(vector<int>& nums) {
+    
+    // binary search based count.
+    // based on the fact that 1~i, we should have counts <= i.
+    // if more than that, we can say there must be duplications!
+    
+    int left = 0, right = nums.size();
+    while(left < right) {
+      int mid = left + (right - left)/2;
+      
+      // Note that we always traverse the entire array range.
+      // Only the mid threshold is performing a binary search!
+      int count = count_if( nums.begin(), nums.end(), 
+													  [mid](const auto& val){ return val <= mid;});
+      if(count > mid) {
+        right = mid;
+      }
+      else {
+        left = mid+1;
+      }
+    }
+    
+    return left;
+  }
+
+  
 };
