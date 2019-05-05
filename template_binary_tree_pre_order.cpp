@@ -1,4 +1,5 @@
 
+// This loop is more efficient although less intuitive
 vector<int> preorderTraversal(TreeNode* root) {
   vector<int> res;
   auto rt = root;
@@ -14,6 +15,28 @@ vector<int> preorderTraversal(TreeNode* root) {
       rt = st.top();
       st.pop();
     }
+  }
+  
+  return res;
+}
+
+
+// Here is a more intuitive one, but
+// will need 2 visits per node.
+
+vector<int> preorderTraversal(TreeNode* root) {
+  vector<int> res;
+  stack<TreeNode*> st;
+
+  while(st.size()) {
+    auto top = st.top();
+    st.pop();
+
+    if(top == nullptr) continue;
+
+    res.emplace_back(top->val);
+    st.push(top->right);
+    st.push(top->left);
   }
   
   return res;
