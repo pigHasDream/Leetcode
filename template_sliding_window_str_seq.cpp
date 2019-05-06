@@ -36,7 +36,7 @@ int findSubstring(string s){
 
   for() { /* initialize the hash map here */ }
 
-  while(int end = 0; end < s.size(); ++end) { 
+  for(int end = 0; end < s.size(); ++end) { 
 
     if(--map[s[end]] ?) { /* modify counter here */ }
 
