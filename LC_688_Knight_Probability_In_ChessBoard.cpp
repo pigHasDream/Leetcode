@@ -27,6 +27,8 @@ public:
   double knightProbability(int N, int K, int r, int c) {
     // The bottom up solution is to accumulate for each position
     // What is the count up to now.
+    // This is essentially a BFS process: start from the r, c source
+    // gradually simulate each location and accumulate the final result.
     vector<vector<double>> dp(N, vector<double>(N, 0));
     // The starting count of being in chessboard is 1.
     dp[r][c] = 1;
