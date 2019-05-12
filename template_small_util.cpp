@@ -36,3 +36,8 @@ int nthUglyNumber(int n) {
 }
 
 // -----------------------------------------------------
+// reading through each digit leter to form a number
+
+int num = 0;
+for(const auto& c : theString)
+	if(isdigit(c)) num = num*10 + c-'0';
