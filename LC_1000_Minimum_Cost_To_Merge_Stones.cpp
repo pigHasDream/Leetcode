@@ -10,6 +10,10 @@ public:
     
     vector<vector<int>> memo(n, vector<int>(n, -1));
     
+    // Note the recursion function declaration!!
+    // 1. declare type with return and args
+    // 2. capture list reference to this function
+    // 3. re-assignment to the function name
     std::function<int(int,int)> doDFS;
     doDFS = [&memo, &sums, &doDFS, n, K, kInf](int start, int end) -> int {
       int len = end-start+1;
