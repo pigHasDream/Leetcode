@@ -82,6 +82,13 @@ std::set_difference
 // iterator case. We can just use back_inserter to do the work.
 std::back_inserter
 std::rotate
+
+std::isdigit
+std::islower
+std::isupper
+std::isalpha
+std::isalnum
+
 std::min_element
 std::max_element
 std::minmax_element
