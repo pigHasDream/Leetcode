@@ -51,3 +51,24 @@ public:
     return res;
   }
 };
+
+
+// Merge the 2 pass into single pass
+class Solution {
+public:
+  vector<int> productExceptSelf(vector<int>& nums) {
+     
+    int leftProd = 1;
+    int rightProd = 1;
+    vector<int> res(nums.size(), 1);
+    
+    for(int i=0; i<nums.size(); ++i) {
+      res[i] *= leftProd;
+      leftProd *= nums[i];
+      res[nums.size()-1-i] *= rightProd;
+      rightProd *= nums[nums.size()-1-i];
+    }
+
+    return res;
+  }
+};
