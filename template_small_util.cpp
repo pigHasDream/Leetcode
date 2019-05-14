@@ -41,3 +41,11 @@ int nthUglyNumber(int n) {
 int num = 0;
 for(const auto& c : theString)
 	if(isdigit(c)) num = num*10 + c-'0';
+
+
+// -----------------------------------------------------
+// use 1-d array or hash table to mimic a 3-d table
+
+unordered_map<int, int> map_;
+int key = (l * d1 + r) * d2 + k;
+map_[k] 
