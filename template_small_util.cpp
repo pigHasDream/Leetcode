@@ -45,7 +45,7 @@ for(const auto& c : theString)
 
 // -----------------------------------------------------
 // use 1-d array or hash table to mimic a 3-d table
-
+// https://zxi.mytechroad.com/blog/dynamic-programming/leetcode-546-remove-boxes/
 unordered_map<int, int> map_;
 int key = (l * d1 + r) * d2 + k;
 map_[k] 
