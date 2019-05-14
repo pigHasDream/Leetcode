@@ -1,4 +1,14 @@
 // -----------------------------------------------------
+// repeatedly search for the first smaller or larger element
+// in an array given index i.
+// Use map<int, int> where first int is the value, second is index.
+// This is essentially a binary search BST.
+// Check for LC_975 lower_ upper_ bound usage to find the first 
+// >= and <= element.
+
+
+
+// -----------------------------------------------------
 // Palindrome check
 bool isPalindrome(const string& s, int start, int end) {
   for(int i=start, j=end; i<j; ++i, --j)
