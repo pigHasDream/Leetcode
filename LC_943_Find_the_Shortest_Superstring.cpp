@@ -82,8 +82,7 @@ public:
     
     for (int i = 0; i < n; ++i) dp[1 << i][i] = A[i].length();
     
-    // the state has 2^n. So it's a combination now instead of
-    // a permutation!
+    // the state has 2^n.
     for (int s = 1; s < (1 << n); ++s) {
       for (int j = 0; j < n; ++j) {
         if (!(s & (1 << j))) continue;
