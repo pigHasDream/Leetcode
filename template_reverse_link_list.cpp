@@ -6,6 +6,8 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+// ---------------------------------
+// reverse linked list iterative
 class Solution {
 public:
   ListNode* reverseList(ListNode* head) {
@@ -26,6 +28,9 @@ public:
 };
 
 
+// ---------------------------------
+// reverse linked list recursion
+
 class Solution {
 public:
   ListNode* reverseList(ListNode* head) {
@@ -43,5 +48,45 @@ public:
     head->next = nullptr;
     
     return root;
+  }
+};
+
+
+// ---------------------------------
+// reverse linked list between m to n
+
+class Solution {
+public:
+  ListNode* reverseBetween(ListNode* head, int m, int n) {
+    if(head == nullptr) return nullptr;
+    ListNode dummy(0);
+    dummy.next = head;
+    ListNode* ptr(&dummy);
+    ListNode* pptr(&dummy);
+    
+    int count = 0;
+    while(count < m) {
+      pptr = ptr;
+      ptr = ptr->next; 
+      ++count;
+    }
+    
+    ListNode* leftEnd(pptr);
+    ListNode* rightStart(ptr);
+    ListNode* cptr(ptr);
+    ListNode* nptr(nullptr);
+    
+    while(count<=n) {
+      nptr = cptr->next;
+      cptr->next = pptr; 
+      pptr = cptr;
+      cptr = nptr;
+      ++count;
+    }
+    
+    leftEnd->next = pptr;
+    rightStart->next = cptr;
+    
+    return dummy.next;
   }
 };
