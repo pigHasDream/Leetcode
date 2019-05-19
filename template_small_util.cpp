@@ -7,6 +7,15 @@
 // >= and <= element.
 
 
+// -----------------------------------------------------
+// Find middle point of a list
+  ListNode* slow = head;
+  ListNode* fast = head->next;
+
+  while(fast != nullptr and fast->next != nullptr) {
+    slow = slow->next;
+    fast = fast->next->next;
+  }
 
 // -----------------------------------------------------
 // Palindrome check
