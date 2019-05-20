@@ -27,6 +27,7 @@ vector<int> preorderTraversal(TreeNode* root) {
 vector<int> preorderTraversal(TreeNode* root) {
   vector<int> res;
   stack<TreeNode*> st;
+  st.push(root);
 
   while(st.size()) {
     auto top = st.top();
