@@ -2,12 +2,15 @@
 int doBinarySearch(int left, int right) {
   // Find the min index to satisfy g(index) == true
   // [left, right)
+  // The template splits the array to 3 parts:
+  // [0,mid), mid, [mid+1, size)
   
   while(left < right) {
     
     const int mid = left + (right - left)/2;
 
     // optional, find and return immediately
+    // This one explicitly checks for [mid]
     if(f(mid)) return mid; 
 
     // if satisfy g(mid), continue getting the min one
