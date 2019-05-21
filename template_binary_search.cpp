@@ -13,6 +13,9 @@ int doBinarySearch(int left, int right) {
     // if satisfy g(mid), continue getting the min one
     if(g(mid)) { 
       // do the right [left, mid)
+      // This template is to find the min one satisfies 
+      // g(mid), and we need to deal with right based on
+      // the g(mid)
       right = mid;
     }
     else {
