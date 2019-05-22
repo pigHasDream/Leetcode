@@ -1,44 +1,48 @@
-int partition(vector<int>& A, 
-              const int left, 
-              const int right) {
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
 
-  const int pivot = arr[left];
-    
-  // the next element of left!
-  int i = left + 1;
-  int j = right;
-    
-  while (i <= j) {
+using namespace std;
 
-    // equal case needs to be covered
-    while(arr[i] <= pivot)  i++;
-    while(arr[j] > pivot) j--;
-
-    if (i < j) 
-      std::swap(arr[i], arr[j]);
-
-    // after this swapping, 
-    // goes back to i++ check,
-    // it'll always success for at least
-    // once, due to above swap
+int partition(vector<int>& vec, int left, int right) {
+  int pivot = vec[left], l = left, r = right;
+  
+  while(l <= r) {
+   // both l and r are opposite, swap them!
+   if(vec[l]>pivot and vec[r]<pivot) 
+     swap(vec[l++], vec[r--]);
+   // l is ok, continue!
+   else if(vec[l]<=pivot) 
+     ++l;
+   // r is ok, continue!
+   else if(vec[r]>=pivot) 
+     --r;
   }
-
-  // when exiting, i points to next
-  // position, so needs to subtract 1.
-  std::swap(A[i - 1], A[left]);
-
-  // return the first element in 2nd part
-  return i;
+  // swap the r with the pivot!
+  swap(vec[left], vec[r]);
+  
+  // return the pivot's index
+  return r;
 }
 
-void quicksort(vector<int>& A, 
-               const int left, 
-               const int right){
-
-  if (left >= right) return;
-
-  int midPos = partition(A, left, right);
-  quicksort(A, left, pivot - 1);
-  quicksort(A, pivot, right);
+void quickSort(vector<int>& vec, int left, int right) {
+  if(left >= right) return;
+  int mid = partition(vec, left, right);
+  
+  quickSort(vec, left, mid-1);
+  quickSort(vec, mid+1, right);
 }
 
+int main()
+{
+  vector<int> vec{2,5,6,2,3,4,8,10,2,44};
+  
+  quickSort(vec, 0, vec.size()-1);
+  
+  for(const auto& e : vec)
+    cout << e << " ";
+  cout << endl;
+  
+  return 0;
+}
