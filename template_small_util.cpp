@@ -68,3 +68,21 @@ for(const auto& c : theString)
 unordered_map<int, int> map_;
 int key = (l * d1 + r) * d2 + k;
 map_[k] 
+
+
+// -----------------------------------------------------
+// priority_queue with customized comparator
+
+auto cmp = [](const auto& p1, const auto& p2) { 
+              if(p1.first == p2.first) 
+                return p1.second > p2.second;
+
+              return p1.first < p2.first; 
+             };
+
+priority_queue<pair<int, string>, vector<pair<int, string>>, decltype(cmp)> heap(cmp);
+
+
+
+
+
