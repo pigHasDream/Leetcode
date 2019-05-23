@@ -83,6 +83,14 @@ auto cmp = [](const auto& p1, const auto& p2) {
 priority_queue<pair<int, string>, vector<pair<int, string>>, decltype(cmp)> heap(cmp);
 
 
+// -----------------------------------------------------
+// Get count of pairs of a sorted array that each pair
+// has difference smaller than a given number
+// This is a 2-pointer O(N) scan using the monotone nature
 
+for(int start=0, end=0; start<nums.size(); ++start) {
+	while(end<nums.size() and nums[end]-nums[start] <= target) ++end;
+	count += end-start-1;
+}
 
 
