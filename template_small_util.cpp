@@ -93,4 +93,19 @@ for(int start=0, end=0; start<nums.size(); ++start) {
 	count += end-start-1;
 }
 
+// -----------------------------------------------------
+// Check if parenthess is valid.
+bool isValid(const string& s) {
+	// check for () validness
+	int count = 0;
+	for(const auto& c : s) {
+		if(c=='(') ++count;
+		if(c==')') --count;
+		if(count<0) return false;
+	}
+	return count == 0;
+}
+
+
+
 
