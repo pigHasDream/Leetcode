@@ -21,10 +21,18 @@ public:
         backward = not backward; 
       }
       
+      // remove whatever has been used!
       for(const auto& w : front1) wordHash.erase(w);
       for(const auto& w : front2) wordHash.erase(w);
       
+      // This is a temp for next iteration!
+      // when using set as queue and doing BFS,
+      // we can use another tmp set to store the next
+      // level of nodes! 
+      // Then, we can swap the sets and used for next
+      // iterations!!!
       unordered_set<string> frontTmp;
+
       for(const auto& w : front1) {
         for(int i=0; i<len; ++i) {
           string cur = w;
@@ -51,6 +59,7 @@ public:
     }
     
     vector<vector<string>> res;
+    // only construct the paths when found the solution!
     if(found) {
       vector<string> curSol{beginWord};
       getPaths(beginWord, endWord, kids, curSol, res);
@@ -59,6 +68,8 @@ public:
     return res;
   }
   
+  // This is a standard DFS to get the path!
+  // The kids is a graph unordered_map standard!
   void getPaths(const string curWord, const string endWord,
                 const unordered_map<string, vector<string>>& kids,
                 vector<string>& curSol, vector<vector<string>>& res) {
