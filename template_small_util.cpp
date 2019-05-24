@@ -94,7 +94,7 @@ for(int start=0, end=0; start<nums.size(); ++start) {
 }
 
 // -----------------------------------------------------
-// Check if parenthess is valid.
+// Check if parenthess is valid. LC301
 bool isValid(const string& s) {
 	// check for () validness
 	int count = 0;
@@ -107,5 +107,16 @@ bool isValid(const string& s) {
 }
 
 
+// -----------------------------------------------------
+// Check how many ( and ) need to be removed! LC301
+int left = 0, right = 0;
+// This counts how many ( and ) need to be removed
+for(const auto& c : s) {
+  left += c=='(';
+  if(left == 0) 
+    right += c==')';
+  else
+    left -= c==')';
+}
 
 
