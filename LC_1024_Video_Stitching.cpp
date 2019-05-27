@@ -6,7 +6,8 @@ public:
                                         else return a[0] < b[0];});
     
     // 1st greedy: sort clips by start, if tie, largest end comes first
-    // 2nd greedy:  
+    // 2nd greedy: like jump game II, for each clip, so long as the start
+    // is smaller than cur, we take the longest ending.
     int res = 0;
     for(int i=0, cur=0, end=0; cur<T; cur=end, ++res) {
       for(; i<clips.size() and clips[i][0]<=cur; ++i) {
