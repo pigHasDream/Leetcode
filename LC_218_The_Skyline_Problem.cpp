@@ -40,7 +40,7 @@ public:
         bst.insert(height);
       }
       else{
-        bst.erase(bst.equal_range(height).first);
+        bst.erase(bst.find(height));
         if(height > maxH()) {
           vector<int> curPoint = {x, maxH()};
           res.emplace_back(curPoint);
