@@ -16,6 +16,14 @@ public:
       events.emplace_back(b[1], -b[2]); 
     }
     
+    // Note that!!
+    // when a.first ties, we put the bigger height first!
+    // This is together with the -b[2] to make
+    // 1) entering first processed
+    // 2) tallest first processed
+    // These 2 points cover naturally for the corner cases
+    // that two blocks with same size back to back (entering first)
+    // also, taller one gets processed first.
     sort(events.begin(), events.end(), [](const auto &a, const auto &b) {
       if(a.first == b.first) return a.second > b.second;
       return a.first < b.first;
