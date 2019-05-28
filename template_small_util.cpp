@@ -119,4 +119,13 @@ for(const auto& c : s) {
     left -= c==')';
 }
 
+// -----------------------------------------------------
+// Find 1-D manhattan distance of a given array
+int findManhattanDist(vector<int>& vec) {
+  sort(vec.begin(), vec.end());
+  int i=0, j=vec.size()-1;
+  int dist = 0;
+  while(i<j) dist += vec[j--] - vec[i++];
+  return dist; 
+}
 
