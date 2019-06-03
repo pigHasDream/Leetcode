@@ -99,5 +99,8 @@ std::count_if
 std::iota
 std::unique_ptr
 
+// array<int, 5> nums = {1,2,3,4,5};
+std::array
+
 // doubly-linked list
 std::list 
