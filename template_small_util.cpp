@@ -138,4 +138,7 @@ int findManhattanDist(vector<int>& vec) {
 std::vector<int>& vec = myNumbers; // use shorter name
 vec.erase(std::remove(vec.begin(), vec.end(), number_in), vec.end());
 
+// -----------------------------------------------------
+// CPP modulo negative handles to make it positive
+(x%mod + mod)%mod
 
