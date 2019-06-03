@@ -11,6 +11,9 @@ public:
     for(int i=1; i<=row; ++i) {
       for(int j=1; j<=col; ++j) {
         // This state transition is very tricky!!
+        // dp[i][j] means the max length by using [i][j]
+        // as the bottom right corner and still form a valid
+        // square!
         if(matrix[i-1][j-1] == '1') {
            dp[i][j] = min(min(dp[i-1][j], dp[i][j-1]), dp[i-1][j-1]) + 1;
            maxLen = max(maxLen, dp[i][j]);
