@@ -60,6 +60,8 @@ int longest_common_subsequence(string p, string q){
 // -------------------------------
 // longest common substr
 // -------------------------------
+// This can also be solved by binary search 
+// and compare. Nlog(N)
 int longest_common_substring(string p, string q){
 
   int m =  p.size(), n =  q.size();
