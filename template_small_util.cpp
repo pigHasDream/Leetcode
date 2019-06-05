@@ -142,3 +142,6 @@ vec.erase(std::remove(vec.begin(), vec.end(), number_in), vec.end());
 // CPP modulo negative handles to make it positive
 (x%mod + mod)%mod
 
+
+// ----------------------------------------------------
+// Prime numbers are in 6K+1, 6K-1 are all primes
