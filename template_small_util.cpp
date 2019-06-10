@@ -145,3 +145,33 @@ vec.erase(std::remove(vec.begin(), vec.end(), number_in), vec.end());
 
 // ----------------------------------------------------
 // Prime numbers are in 6K+1, 6K-1 are all primes
+//
+
+// ----------------------------------------------------
+// Find length at least K subarray sum that sum is >=0;
+double checkSum(vector<int>& nums, int k) {
+	
+	double sum = 0;
+	double prev = 0;
+	double minSum = 0;
+	
+	// if the first k already meets
+	for(int i=0; i<k; ++i) 
+		sum += nums[i];
+	
+	if(sum >=0) return true;
+	
+	// if first k not meets,
+	// we use 2 running prefix sums,
+	// the slow one we keeps getting the min value of them,
+	// so that when we do the subtraction, we ensure
+	// if there is a >= 0, it's always true!
+	for(int i=k; i<nums.size(); ++i) {
+		sum += nums[i];
+		prev += nums[i-k];
+		minSum = min(prev, minSum);
+		if(sum - minSum >=0) return true;
+	}
+	
+	return false;
+}
