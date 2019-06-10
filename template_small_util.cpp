@@ -149,6 +149,7 @@ vec.erase(std::remove(vec.begin(), vec.end(), number_in), vec.end());
 
 // ----------------------------------------------------
 // Find length at least K subarray sum that sum is >=0;
+// LC 644 technique
 double checkSum(vector<int>& nums, int k) {
 	
 	double sum = 0;
