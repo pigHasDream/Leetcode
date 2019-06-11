@@ -176,3 +176,16 @@ double checkSum(vector<int>& nums, int k) {
 	
 	return false;
 }
+
+// -----------------------------------------------------
+//    a x b = LCM(a, b) * GCD (a, b)
+//    LCM(a, b) = (a x b) / GCD(a, b) 
+
+int gcd(int a, int b) {
+  if(a>b) swap(a, b);
+  if(a == 0) return b;
+  return gcd(b%a, a);
+}
+
+
+
