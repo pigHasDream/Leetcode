@@ -43,6 +43,7 @@ class segTreeNode {
 class segTreeUtil {
   public:
     // -----------------------------------------------------
+    // post-order recursive build
     segTreeNode* doBuildTree(int start, int end, const vector<int>& nums) {
 
       // build segment tree with range
