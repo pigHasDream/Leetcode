@@ -19,8 +19,10 @@ public:
           ++left;
         }
         
-        // this counts up the number of subarrays 
-        // that within [left, right] at most K distinct
+        // this counts up the number of new subarrays 
+        // where the new value A[right] pairs up with
+        // all the way up to A[left] subarrays.
+        // There is no duplication through the sliding window
         counter += right - left + 1;
         ++right;
       }
