@@ -121,3 +121,25 @@ int longestPalindromeSubseq(string s) {
 // count palindrome substr
 // -------------------------------
 
+// -------------------------------
+// Check for is s is subseq of t
+// -------------------------------
+  bool isSubsequence(string s, string t) {
+    vector<vector<int>> hash(26, vector<int>(0));
+    
+    for(int i=0; i<t.size(); ++i) {
+      hash[t[i]-'a'].emplace_back(i);
+    }
+    
+    for(int k=0, j=-1; k<s.size(); ++k) {
+      auto tar = hash[s[k]-'a'];
+      if(tar.empty()) return false;
+      
+      auto iter = upper_bound(tar.begin(), tar.end(), j);
+      if(iter == end(tar)) return false;
+      
+      j=*iter;
+    }
+    
+    return true;
+  }
