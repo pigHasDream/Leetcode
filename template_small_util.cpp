@@ -187,5 +187,27 @@ int gcd(int a, int b) {
   return gcd(b%a, a);
 }
 
+// -----------------------------------------------------
+// split a cpp string by deliminator
+void split(string str) {
+  stringstream ss(str);
+  unordered_set<int, string> result;
+  int idx = 0;
+  while(getline(ss, result[idx++], ','));
 
+
+  // or use boost
+  vector<string> res;
+  boost::split(res, str, [](const auto& s) { return s == ','; });
+};
+
+// -----------------------------------------------------
+// string find, rfind returns the target char position
+
+str.find('/');
+str.rfind('/');
+  
+  
+  
+      
 
