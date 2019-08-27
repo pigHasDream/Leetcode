@@ -7,7 +7,12 @@ public:
     };
     
     unordered_map<int,int> memo;
-    
+    // doDFS returns the min cost solution!
+    // state: the currently already assgined bikes
+    // wIdx: the worker id to be assigned with a bike!
+    // memo: the min cost value under current bike assignment conditions,
+    //       because the worker is always same as the bike counts, only state 
+    //       is sufficient to mark the uniqueness.
     function<int(int,int)> doDFS = [&](int wIdx, int state) {
       
       if(wIdx >= workers.size()) {
