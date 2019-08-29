@@ -104,3 +104,6 @@ std::array
 
 // doubly-linked list
 std::list 
+
+// memcpy
+void* memcpy( void* dest, const void* src, std::size_t count );
