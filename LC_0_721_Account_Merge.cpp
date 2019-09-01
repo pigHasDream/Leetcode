@@ -1,72 +1,100 @@
+// Union Find solution
 class Solution {
 public:
-  // This problem has several things:
-  // 1. We can use Union-Find, but this is string, so we need
-  // to use map to map string to string.
-  // 2. We can also use DFS like this solution, the we need to
-  // convert the relation to be a graph.
-  // 3. converting set relation to a graph: make each neighboring 
-  // element in the same set as an edge, and make the edge dual direction!!
-  // 4. collect connected component for the results
-  // 5. final result requires the solution to be sorted, so use set!
-  vector<vector<string>> accountsMerge(vector<vector<string>>& acts) {
+  vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
     
-    unordered_map<string, set<string>> graph;
-    unordered_map<string, string> nameMap;
-    unordered_set<string> visit;
+    unordered_map<string, string> parent;
+    unordered_map<string, string> em2name;
+
+    function<const string&(const string&)> find = [&](const string& em) -> const string& {
+      if(parent[em] != em) {
+        parent[em] = find(parent[em]);
+      }
+      return parent[em];
+    };
+    
+    for(const auto& acc : accounts) {
+      string name;
+      for(int i=0; i<acc.size(); ++i) {
+        if(i==0) name = acc[i];
+        else {
+          if(i==1) em2name[acc[i]] = name;
+          if(parent.count(acc[i]) == 0) parent[acc[i]] = acc[1];
+          else parent[find(acc[i])] = parent[acc[1]];
+        }
+      }
+    }
+    
+    unordered_map<string, set<string>> mres;
+    for(const auto& pr : parent)
+      mres[find(pr.first)].emplace(pr.first);
+    
     vector<vector<string>> res;
-    
-    buildGraph(acts, graph, nameMap);
-    
-    // This is basically the way to return components!
-    for(const auto& p : graph) {
-      auto node = p.first;
-      if(visit.count(node)) continue;
-      set<string> curRes;
-      doDFS(graph, visit, node, curRes);
-      
-      vector<string> r(curRes.begin(), curRes.end());
-      r.insert(r.begin(), nameMap[node]);
-      res.emplace_back(r);
+    for(const auto& m : mres) {
+      vector<string> row;
+      row.emplace_back(em2name[m.first]);
+      for(const auto& ems : m.second) {
+        row.emplace_back(ems);
+      }
+      res.emplace_back(row);
     }
     
     return res;
   }
+};
+
+
+// DFS solution
+// No need to add all edges among all email nodes
+// only need to use representative email as root to connect all emails within a group
+// In that sense, this is pretty much the same as Union-Find solution as there is only one root!
+
+class Solution {
   
-  // build undirected graph
-  void buildGraph(vector<vector<string>>& acts, 
-                  unordered_map<string, set<string>>& graph,
-                  unordered_map<string, string>& nameMap) {
+public:
+  vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+      
+    unordered_map<string, unordered_set<string>> graph;
     
-    for(int i=0; i<acts.size(); ++i) {
-      for(int j=1; j<acts[i].size(); ++j) {
-        nameMap[acts[i][j]] = acts[i][0];
-        // for solo node, insert a special empty string
-        graph[acts[i][1]].insert("");
-        
-        // Here the adj nodes are inserted with dual directions
-        if(j==1) continue;
-        graph[acts[i][j]].insert(acts[i][j-1]);
-        graph[acts[i][j-1]].insert(acts[i][j]);
+    // create the graph
+    for(const auto& p : accounts) {
+      for(int i=1; i<p.size(); ++i) {
+        graph[p[1]].emplace(p[i]);
+        graph[p[i]].emplace(p[1]);
       }
     }
-  }
-  
-  // normal DFS. Mark the visit and record curRes for current node
-  void doDFS(unordered_map<string, set<string>>& graph,
-             unordered_set<string>& visit,
-             string node,
-             set<string>& curRes) {
     
-    if(visit.count(node)) return;
-   
-    visit.insert(node);
-    curRes.insert(node);
+    vector<vector<string>> res;
+    unordered_set<string> visit;
     
-    for(const auto& next : graph[node]) {
-      if(next.empty() or visit.count(next)) continue;
-      doDFS(graph, visit, next, curRes);
+    function<void(string,const string&,vector<string>&)> 
+      doDFS = [&](string name, const string& curEm, vector<string>& curRow) {
+      if(visit.count(curEm)) return;
+      
+      if(name.size()) {
+        curRow.emplace_back(name);
+        name.clear();
+      }
+      
+      curRow.emplace_back(curEm);
+      visit.emplace(curEm);
+      
+      for(const auto& next : graph[curEm]) {
+        doDFS(name, next, curRow);
+      }
+    };
+      
+    for(const auto& acc : accounts) {
+      vector<string> curR;
+      doDFS(acc.front(), acc.back(), curR);
+      if(curR.size())
+        res.emplace_back(curR);
     }
-  }
     
+    for(auto& row : res)
+      sort(row.begin()+1, row.end());
+    
+    return res;
+  }
 };
+
