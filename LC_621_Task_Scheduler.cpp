@@ -1,33 +1,35 @@
 class Solution {
 public:
   int leastInterval(vector<char>& tasks, int n) {
-    unordered_map<char, int> hash;
-    priority_queue<pair<int,char>> que;
-    for(const auto& t : tasks) ++hash[t];
-    for(const auto& h : hash) que.emplace(h.second, h.first);
+    vector<int> hash(26,0);
+    for(const auto& t : tasks)
+      ++hash[t-'A'];
     
-    int len = tasks.size();
+    priority_queue<int> pq;
+    for(const auto& h : hash)
+      if(h>0) pq.emplace(h);
+    
     int res = 0;
-    char prev;
-    while(que.size()) {
-      vector<pair<int,char>> tmpHolder;
+    int cycle = n+1;  
+    while(pq.size()) {
       
-      for(int i=0; i<=n; ++i) {
-        if(que.empty()) {
-          if(tmpHolder.size()) {
-            prev = '-';
-            ++res;
-            continue;
-          }
-          else break;
-        }
-        auto top = que.top(); que.pop();
-        prev = top.second;
-        if(--top.first) tmpHolder.emplace_back(top.first, top.second);
-        ++res;
+      vector<int> tmp;
+      int slot = 0;
+      
+      for(int i=0; i<cycle; ++i) {
+        if(pq.empty()) break;
+        
+        auto top = pq.top(); pq.pop();
+        ++slot;
+        
+        if(top>1) 
+          tmp.emplace_back(top-1);
       }
       
-      for(const auto& v : tmpHolder) que.emplace(v);
+      for(const auto& t : tmp)
+        pq.emplace(t);
+      
+      res += pq.size() ? cycle : slot;
     }
     
     return res;
