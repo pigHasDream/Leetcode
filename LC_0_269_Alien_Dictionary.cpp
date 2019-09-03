@@ -1,50 +1,52 @@
 class Solution {
 public:
   string alienOrder(vector<string>& words) {
-    unordered_map<char, unordered_set<char>> graph;
-    function<void(const vector<string>&)> createGraph = [&](const vector<string>& ws) {
-      for(const auto& str : ws)
-        for(const auto& c : str)
-          graph[c].insert(0);
-
-      for(int i=1; i<ws.size(); ++i) {
-        auto prev = ws[i-1];
-        auto curr = ws[i];
-        int idx=0;
-        int len=min(prev.size(), curr.size());
-        while(idx<len and prev[idx]==curr[idx]) ++idx;
-        if(idx<len) 
-          graph[prev[idx]].insert(curr[idx]);
+    vector<unordered_set<int>> graph(26);
+    
+    // This is a special handle when all chars are the same
+    // we need to still output valid singleton node
+    // so this "special" sink node of index -1 will be used
+    for(const auto& w : words)
+      for(const auto& c : w)
+        graph[c-'a'].emplace(-1);
+    
+    for(int i=0, j=i+1; j<words.size(); ++i, ++j) {
+      for(int idx=0; idx<words[i].size(); ++idx) {
+        if(words[i][idx] != words[j][idx]) {
+          graph[words[i][idx]-'a'].emplace(words[j][idx]-'a');
+          break;
+        }
       }
-    };
+    }
     
-    createGraph(words);
-    
-    unordered_map<char, int> status;
     string res;
-    function<bool(const char&)> topoSort = [&](const char& cur) {
-      if(status.count(cur)) {
-        if(status[cur] == 1) 
-          return true;
-        if(status[cur] == -1) 
+    // state 0: in the stack visiting
+    // state 1: already visited
+    vector<int> visit(26,-1);
+    
+    function<bool(int)> doDFS = [&](const int node) {
+      if(visit[node] == 1) return true;
+      if(visit[node] == 0) return false;
+      
+      visit[node] = 0;
+      for(const auto& next : graph[node]) {
+        // Note this special sink -1 will be skipped!
+        if(next == -1) continue;
+        if(not doDFS(next)) 
           return false;
       }
       
-      status[cur] = -1;
-      for(const auto& c : graph[cur]) {
-        if(c==0) continue;
-        if(not topoSort(c)) 
-          return false;
-      }
-      status[cur] = 1;
+      visit[node] = 1;
+      res += char('a'+node);
       
-      res.push_back(cur);
       return true;
     };
     
-    for(const auto& p : graph)
-      if(not topoSort(p.first)) 
-        return "";
+    for(int i=0; i<26; ++i) {
+      if(graph[i].size()) {
+        if(not doDFS(i)) return "";
+      }
+    }
     
     return string(res.rbegin(), res.rend());
   }
