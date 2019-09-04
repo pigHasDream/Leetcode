@@ -1,99 +1,69 @@
-// -----------------------------------------------------
-struct TrieNode {
-  TrieNode() : kids_(26, nullptr), isWord_(false) {}
-  ~TrieNode() {
-    for(auto& ptr : kids_)
-      delete ptr;
-  }
-  vector<TrieNode*> kids_;
-  bool isWord_; 
-};
-
-// -----------------------------------------------------
-class Trie {
-public:
-  TrieNode theRoot_;
-  Trie(): theRoot_() {}
-  
-  void insert(const string& word) {
-    auto p = &theRoot_;
-    for(const auto& c : word) {
-      if(p->kids_[c-'a'] == nullptr) 
-        p->kids_[c-'a'] = new TrieNode();
-      p = p->kids_[c-'a'];
-    }
-    p->isWord_ = true;
-  }
-};
-
-// -----------------------------------------------------
 class Solution {
-  Trie theTrie_;
-  unordered_set<string> res_;
-  vector<vector<bool>> visit_;
-  vector<int> dir_{0,1,0,-1,0};
-  
 public:
-  vector<string> findWords(vector<vector<char>>& board, 
-                           vector<string>& words) {
+  vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
     int row = board.size();
-    if(row == 0) return {};
+    if(row<1) return {};
     int col = board[0].size();
+    if(col<1) return {};
     
-    visit_.resize(row, vector<bool>(col, false));
-    for(const auto& w : words) 
-      theTrie_.insert(w);
+    unordered_set<string> res;
+    TrieNode root;
     
-    auto ptr = &(theTrie_.theRoot_);
+    for(const auto& w : words) {
+      auto p = &root;
+      for(const auto& c : w) {
+        if(p->kids_[c-'a'] == nullptr) 
+          p->kids_[c-'a'] = new TrieNode;
+        
+        p = p->kids_[c-'a'];
+      }
+      p->isWord_ = true;
+    }
     
-    // After setting up the Trie, we can 
-    // scan based on board and check each existing 
-    // Trie path. 
-    // The good thing about this is the early 
-    // pruning based on the prefix.
-
-    for(int i=0; i<row; ++i) {
-      for(int j=0; j<col; ++j) {
-        visit_[i][j] = true;
-        doDFS(board, ptr, "", i, j);
-        visit_[i][j] = false;
+    vector<vector<int>> visit(row, vector<int>(col, 0));
+    vector<int> dir{0,1,0,-1,0};
+    
+    function<void(int,int,const TrieNode*,string)> doDFS = [&] (int i, int j, const TrieNode* node, string curSol) {
+      
+      // We use current node's kids_ to check for existence of certain char
+      // But use next (kid) node to check for isWord_ mark.
+      
+      auto next = node->kids_[board[i][j]-'a'];
+      if(next == nullptr) return;
+      if(next->isWord_) res.emplace(curSol);
+      
+      visit[i][j] = 1;
+      
+      curSol += board[i][j];
+      for(int m=0; m<4; ++m) {
+        int x = i+dir[m];
+        int y = j+dir[m+1];
+        if(x<0 or y<0 or x>row-1 or y>col-1 or visit[x][y])
+          continue;
+        doDFS(x,y,next,curSol);
+      }
+      
+      visit[i][j] = 0;
+    };
+    
+    for(int r=0; r<row; ++r) {
+      for(int c=0; c<col; ++c) {
+        visit.resize(row, vector<int>(col, 0));
+        doDFS(r,c,&root,"");
       }
     }
-    return vector<string>(res_.begin(), res_.end());
+    
+    return vector<string>(res.begin(), res.end());
   }
   
 private:
-  void doDFS(const vector<vector<char>>& board,
-             TrieNode* nodePtr,
-             string curWord,
-             int i,
-             int j) {
-    
-    auto next = nodePtr->kids_[board[i][j] - 'a'];
-    
-    // if there is no more char in this Trie path, ends it.
-    if(next == nullptr) return;
-    
-    // otherwise, continue searching the same Trie path.
-    curWord += board[i][j];
-    nodePtr = next;
-    
-    // even if it's a word and found, we continue the search.
-    // Since multiple words can share the same prefix.
-    if(nodePtr->isWord_) res_.insert(curWord);
-    
-    for(int k=0; k<4; ++k) {
-      int xx = i+dir_[k], yy = j+dir_[k+1];
-      
-      if(xx<0 or xx>board.size()-1 or 
-         yy<0 or yy>board[0].size()-1 or 
-         visit_[xx][yy]) 
-        continue;
-     
-      visit_[xx][yy] = true;
-      doDFS(board, next, curWord, xx, yy);
-      visit_[xx][yy] = false;
+  struct TrieNode {
+    TrieNode() = default;
+    ~TrieNode() {
+      for(auto& k : kids_)
+        delete k;
     }
-  }
-  
+    vector<TrieNode*> kids_{26, nullptr};
+    bool isWord_{false};
+  };
 };
