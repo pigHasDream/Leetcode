@@ -30,11 +30,11 @@ public:
       
       auto next = node->kids_[board[i][j]-'a'];
       if(next == nullptr) return;
+      curSol += board[i][j];
       if(next->isWord_) res.emplace(curSol);
       
       visit[i][j] = 1;
       
-      curSol += board[i][j];
       for(int m=0; m<4; ++m) {
         int x = i+dir[m];
         int y = j+dir[m+1];
