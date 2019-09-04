@@ -207,7 +207,16 @@ void split(string str) {
 str.find('/');
 str.rfind('/');
   
-  
+// -----------------------------------------------------
+// delete linked list or binary tree requires to remove every
+// elem in the list or tree. We can do recursion, but better do iterative
+void myList::destroy(TheList* node) {
+  while (node) {
+    auto old = node;
+    node = node->next;
+    delete old;
+  }
+}
   
       
 
