@@ -219,7 +219,7 @@ void myList::destroy(TheList* node) {
 }
   
 // -----------------------------------------------------
-// for N nodes, how many inter connects among them without self connect?
+// for N nodes, how many directed inter connects among them without self connect?
 N*(N-1)
       
 
