@@ -1,6 +1,9 @@
 // topo sort can detect DIRECTED graph loop.
 // UN-DIRECTED graph loop: union-find
 // or DFS with visit() check but not father node!
+// DFS uses O(E+V) complexity
+// Using Kahn algorithm uses O(VE) comlexity.
+
 
 class Solution {
 public:
