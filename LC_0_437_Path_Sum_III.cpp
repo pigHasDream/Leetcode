@@ -26,11 +26,13 @@ public:
         res += hash[newSum - sum];
       }
       
+      // This is backtracking!
       ++hash[newSum];
       
       doDFS(rt->left, newSum);
       doDFS(rt->right, newSum);
       
+      // This is backtracking!
       --hash[newSum];
     };
 
