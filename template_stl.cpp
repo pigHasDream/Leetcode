@@ -105,5 +105,15 @@ std::array
 // doubly-linked list
 std::list 
 
+// stl container member function remove vs erase
+list::remove // actual deletion of element
+// There is no vector::remove!
+
+std::remove // copy and compact the elements no deletion!
+// Both std::remove and member remove are using predicate or value check!
+
+list::erase // delete element by iterator!
+vector::erase // actual delete element by iterator or position!
+
 // memcpy
 void* memcpy( void* dest, const void* src, std::size_t count );
