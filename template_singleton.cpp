@@ -22,6 +22,12 @@ class SingletonOldSchoolCL {
       cout << name_ << endl;
     }
 
+    ~SingletonOldSchoolCL() {
+      if(instance_) 
+        delete instance_;
+      instance_ = nullptr;
+    }
+
   private:
     SingletonOldSchoolCL() {
       name_ = "My name is SingletonOldSchoolCL";
