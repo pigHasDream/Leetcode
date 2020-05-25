@@ -1,3 +1,33 @@
+iclass Solution {
+public:
+  int minSubArrayLen(int s, vector<int>& nums) {
+    int sum = 0;
+    int left = 0;
+    int res = INT_MAX;
+    
+    // outer loop extends the right boundary
+    for(int right = 0; right < nums.size(); ++right) {
+      // first if-check is for satisfactory
+      if(sum < s) {
+        sum += nums[right];
+      }
+      
+      // below loop is to shrink left boundary
+      // Condition can be opposite to earlier one!
+      while(sum >= s) {
+        // This result update is dependent on the 
+        // either min or max!
+        res = min(res, right-left+1);
+        sum -= nums[left];
+        ++left;
+      }
+    }
+
+    return res == INT_MAX ? 0 : res;
+  }
+};
+
+
 class Solution {
 public:
   int minSubArrayLen(int s, vector<int>& nums) {
