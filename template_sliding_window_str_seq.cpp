@@ -3,12 +3,23 @@
 
 // 3-basic essense:
 // 1. hashtable, 2. two-pointers left and right
-// 3. a counter for condition check.
+// 3. (optional) a counter for condition check.
 
-// Two-level of while/for loop: first level is
-// right pointer move, second level is when
-// condition meets, move shrink left pointer
-// until no longer valid.
+// ======= For Min Length case ======
+// 2-level loop: first level is to extend right
+// pointer, once certain condition BREAKS, starts
+// the second loop and shrink the left pointer until
+// the contidion no longer meets.
+// Update the min res in the 2nd loop cauz this is the
+// place that barely maintains the condition!
+
+// ======= For Max Length case ======
+// 2-level loop: first level is to extend right
+// pointer to maintain a valid condition, once breaks, 
+// starts the second loop and shrink the left pointer 
+// until the condition meets again.
+// Update the max res in the 1st loop cauz that's the 
+// place to extend the length!
 
 // Using hashtable to connect the 2 strings,
 // and ++ -- to compare with 0 to decide whether
