@@ -36,10 +36,15 @@ int findSubstring(string s){
 
   for() { /* initialize the hash map here */ }
 
+  // Outer loop extends the right pointer, and to meet 
+  // the condition of satisfying!
   for(int end = 0; end < s.size(); ++end) { 
 
     if(--map[s[end]] ?) { /* modify counter here */ }
 
+    // This inner loop shrinks the left boundary and
+    // to get the minimum soluiton that works!
+    //
     // sometimes other conditions, just satisfying!
     // The loop is to update then gradually break 
     // the satisfying, then we get to outer loop
