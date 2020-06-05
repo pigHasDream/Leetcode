@@ -34,7 +34,6 @@ public:
           auto left = doDFS(start, i-1);
           auto right = doDFS(i+1, end);
 
-
           for(auto l : left) {
             for(auto r : right) {
               TreeNode* root = new TreeNode(i);
