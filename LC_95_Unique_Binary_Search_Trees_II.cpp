@@ -45,8 +45,7 @@ public:
         }
       }
       
-      memo[start][end] = res;
-      return res;
+      return memo[start][end] = res;
     };
 
     return doDFS(1,n);
