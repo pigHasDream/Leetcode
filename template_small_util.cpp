@@ -222,4 +222,7 @@ void myList::destroy(TheList* node) {
 // for N nodes, how many directed inter connects among them without self connect?
 N*(N-1)
       
-
+// -----------------------------------------------------
+// For remainder related, if it contains negtative numbers,
+// we need to remove its impact. Here is the way to offset
+((num % div) + div) % div
