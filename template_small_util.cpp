@@ -226,3 +226,13 @@ N*(N-1)
 // For remainder related, if it contains negtative numbers,
 // we need to remove its impact. Here is the way to offset
 ((num % div) + div) % div
+
+
+// -----------------------------------------------------
+// Count number of sub arrays in a 1-D vector that all 1s
+int res = 0, length = 0;
+for (int i = 0; i < A.length; ++i) {
+  length = (A[i] == 0 ? 0 : length + 1);
+  res += length;
+}
+return res;
