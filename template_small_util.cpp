@@ -133,7 +133,7 @@ int findManhattanDist(vector<int>& vec) {
 // CPP vector erase-remove idiom
 // std::remove shifts all non-removed elements to left
 // and return the first matching elem's iter. erase will 
-// clean them up.
+// clean them up. This also applies to string.
 
 std::vector<int>& vec = myNumbers; // use shorter name
 vec.erase(std::remove(vec.begin(), vec.end(), number_in), vec.end());
