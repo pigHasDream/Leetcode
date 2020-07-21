@@ -236,3 +236,24 @@ for (int i = 0; i < A.length; ++i) {
   res += length;
 }
 return res;
+
+//-----------------------------------------------------
+// Count how many 1 patterns strings
+int numSub(string s) {
+	const int mod = 1e9 + 7;
+
+	int res = 0;
+	int count = 0;
+
+	for(const auto& c : s) {
+    // This is the key!
+    // while iterating the numbers, we repeatedly
+    // add up the count!!
+    // The alternative solution is to use (n+1)*n/2
+		count = c == '1' ? count + 1 : 0;
+		res = (res + count) % mod;
+	}
+
+	return res;
+}
+
