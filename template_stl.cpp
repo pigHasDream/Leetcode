@@ -117,3 +117,7 @@ vector::erase // actual delete element by iterator or position!
 
 // memcpy
 void* memcpy( void* dest, const void* src, std::size_t count );
+
+// sizeof
+sizeof(type);
+sizeof expression;
