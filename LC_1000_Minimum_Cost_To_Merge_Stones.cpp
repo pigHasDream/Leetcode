@@ -6,26 +6,32 @@ public:
     const int kInf = 1e9;    
     
     vector<int> sums(n + 1);
-    for (int i = 0; i < stones.size(); ++i) sums[i + 1] = sums[i] + stones[i];
+    for (int i = 0; i < stones.size(); ++i) 
+      sums[i + 1] = sums[i] + stones[i];
     
     vector<vector<int>> memo(n, vector<int>(n, -1));
     
-    // Note the recursion function declaration!!
-    // 1. declare type with return and args
-    // 2. capture list reference to this function
-    // 3. re-assignment to the function name
-    std::function<int(int,int)> doDFS;
-    doDFS = [&memo, &sums, &doDFS, n, K, kInf](int start, int end) -> int {
+    std::function<int(int,int)> doDFS = 
+      [&](int start, int end) {
+
       int len = end-start+1;
       if(len<K) return 0;
-      if(memo[start][end] != -1) return memo[start][end];
-      if(start == end) return memo[start][end] = 0;
+
+      if(memo[start][end] != -1) 
+        return memo[start][end];
+
+      if(start == end) 
+        return memo[start][end] = 0;
       
       int ret = kInf;
       for(int m=start; m<end; m += K-1)
         ret = min(ret, doDFS(start, m) + doDFS(m+1, end));
       
-      if((len-1)%(K-1) == 0) ret += sums[end+1] - sums[start];
+      // Below condition indicates an actual merge happens!
+      // If below condition not met, there is no merge!
+      // Not all iterations will do actual merge!
+      if((len-1)%(K-1) == 0) 
+        ret += sums[end+1] - sums[start];
       
       return memo[start][end] = ret;
     };

@@ -1,30 +1,50 @@
-vector<int> dijkstra(const vector<vector<pair<int, int>>>& graph, int N, int K) {
-  // graph data structure: curNode is implict in index, the pair is {outNode, cost}
-  // vector<vector<pair<int, int>>>& graph
+// Below is the network time problem!!
+// Notice the if- comparison done inside the for-loop
+// This is a directed graph
 
-  // This returns the shortest path from node K (index K-1) to all other nodes
-  vector<int> cost(N, INT_MAX);
-
-  // priority_queue also sorts by first member of the pair
-  // {pair, outNode}
-  priority_queue<pair<int,int>, vector<pair<int, int>>, greater<pair<int,int>>> theQueue;
-
-  theQueue.push({0, K-1});
-
-  while(theQueue.size()) {
-    int curCost = theQueue.top().first;
-    int nodeIdx = theQueue.top().second;
-    theQueue.pop();
-
-    if(cost[nodeIdx] != INT_MAX)
-      continue;
-
-    cost[nodeIdx] = curCost;
+class Solution {
+public:
+  int networkDelayTime(vector<vector<int>>& times, int N, int K) {
     
-    for(auto neighbor : graph[nodeIdx]) {
-      theQueue.push({neighbor.second + curCost, neighbor.first});
+    vector<vector<pair<int,int>>> graph(N+1);
+    
+    for(const auto& e : times) {
+      graph[e[0]].emplace_back(e[2], e[1]);
     }
-  }
+    
+    auto cmp = [](const auto& a, const auto& b) {
+      if(a.first == b.first) return a.second < b.second;
+      return a.first < b.first;
+    };
+    
+    vector<int> res(N+1, INT_MAX/2);
+    
+    // pair : {cost, outNode}
+    priority_queue<pair<int,int>, vector<pair<int,int>>, decltype(cmp)> que(cmp);
+    que.emplace(0, K);
+    res[K] = 0;
+    
+    while(que.size()) {
+      auto top = que.top();
+      que.pop();
+      
+      auto soFarCost = top.first;
+      auto curNode = top.second;
+      
+      for(const auto& nxt : graph[curNode]) {
+        auto edgeCost = nxt.first; 
+        auto nxtNode = nxt.second;
+        
+        if(soFarCost + edgeCost < res[nxtNode]) {
+          res[nxtNode] = soFarCost + edgeCost;
+          que.emplace(res[nxtNode], nxtNode);
+        }
+        
+      }
+    }
 
-  return cost;
-}
+    int ret = *max_element(next(res.begin()), res.end());
+    return ret == INT_MAX/2 ? -1 : ret;
+    
+  }
+};

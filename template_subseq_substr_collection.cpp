@@ -37,6 +37,23 @@ int lengthOfLIS(vector<int>& nums) {
 }
 
 // -------------------------------
+int lengthOfLIS(vector<int>& nums) {
+	// the nlog(n) solution is using patience sorting
+	// https://www.cs.princeton.edu/courses/archive/spring13/cos423/lectures/LongestIncreasingSubsequence.pdf
+	// Key observation:
+	// patience sorting, the top card of each pile forms an increasing order by following the rule.
+
+	vector<int> res;
+	for(const auto& n : nums) {
+		auto iter = lower_bound(res.begin(), res.end(), n);
+		if(iter == res.end()) res.emplace_back(n);
+		else *iter = n;
+	}
+
+	return res.size();
+
+}
+// -------------------------------
 // longest common subsequence
 // -------------------------------
 int longest_common_subsequence(string p, string q){

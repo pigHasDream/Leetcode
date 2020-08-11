@@ -19,23 +19,24 @@ public:
     // the value refers to wether visited or not
     vector<vector<int>> visit(size, vector<int>(1<<size,0));
     
+    // all nodes can start!
     for(int i=0; i<size; ++i)
-      que.push({i, 1<<i});
+      que.emplace(i, 1<<i);
     
     int step = 0;
     while(que.size()) {
       for(int k=que.size(); k>0; --k) {
-        auto top = que.front();
+        auto [node, start] = que.front();
         que.pop();
         
-        int node = top.first;
-        int state = top.second;
-        if(state == finalState) return step;
-        if(visit[node][state]) continue;
+        if(state == finalState) 
+          return step;
+        if(visit[node][state]) 
+          continue;
         visit[node][state] = 1;
         
-        for(auto next : graph[node]) {
-          que.push({next, state | (1<<next)});
+        for(const auto& nxt : graph[node]) {
+          que.push({nxt, state | (1<<next)});
         }
       }
       ++step;

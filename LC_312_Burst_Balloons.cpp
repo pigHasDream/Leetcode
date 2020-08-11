@@ -26,3 +26,39 @@ public:
 
   }
 };
+
+// Key things are
+// Padding two ends to have a uniform approach
+// State transition: scan through the surviving node, and will multiple by the one elem
+// passing the boundaries.
+class Solution {
+public:
+  int maxCoins(vector<int>& nums) {
+    vector<int> balls(nums);
+    balls.insert(balls.begin(), 1);
+    balls.emplace_back(1);
+    
+    int sz = balls.size();
+    vector<vector<int>> memo(sz, vector<int>(sz, -1));
+    
+    function<int(int,int)> doDFS =
+      [&](int left, int right) {
+      
+      if(left > right)
+        return 0;
+      
+      if(memo[left][right] != -1)
+        return memo[left][right];
+        
+      int ret = 0;
+      for(int i=left; i<=right; ++i) {
+        ret = max(ret, doDFS(left, i-1) + doDFS(i+1, right) + balls[left-1]*balls[i]*balls[right+1]);
+      }
+      
+      return memo[left][right] = ret;
+    };
+    
+    return doDFS(1, sz-2);
+    
+  }
+};
