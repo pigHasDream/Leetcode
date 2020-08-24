@@ -139,6 +139,17 @@ std::vector<int>& vec = myNumbers; // use shorter name
 vec.erase(std::remove(vec.begin(), vec.end(), number_in), vec.end());
 
 // -----------------------------------------------------
+// CPP remove unordered_map or unordered_set in a loop
+for(auto iter = unodered_map_set.begin(); iter != end(XX);) {
+  if(iter == TARGET) {
+    iter = unodered_map_set.erase(iter);
+  }
+  else {
+    ++iter;
+  }
+}
+
+// -----------------------------------------------------
 // CPP modulo negative handles to make it positive
 (x%mod + mod)%mod
 

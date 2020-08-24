@@ -1,25 +1,6 @@
 // -------------------------------
 // longest increasing subsequence
 // -------------------------------
-
-// NlogN solution, keeps an increasing
-// subseq array, and only update 
-// to the last element
-
-int lengthOfLIS(vector<int>& nums) {
-  vector<int> res;
-
-  for(int i=0; i<nums.size(); i++) {
-    auto it = std::lower_bound(res.begin(), res.end(), nums[i]);
-    if(it==res.end()) res.emplace_back(nums[i]);
-    else *it = nums[i];
-  }
-
-  return res.size();
-}
-
-// ---------------
-
 // N^2 typical DP: 2 level loop,
 // 1-D space. 
 int lengthOfLIS(vector<int>& nums) {
@@ -42,6 +23,7 @@ int lengthOfLIS(vector<int>& nums) {
 	// https://www.cs.princeton.edu/courses/archive/spring13/cos423/lectures/LongestIncreasingSubsequence.pdf
 	// Key observation:
 	// patience sorting, the top card of each pile forms an increasing order by following the rule.
+  // each pile itself decreases, if new card cannot be put, put it in new pile
 
 	vector<int> res;
 	for(const auto& n : nums) {
