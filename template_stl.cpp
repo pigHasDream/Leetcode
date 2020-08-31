@@ -3,6 +3,12 @@ std::upper_bound
 std::binary_search
 std::nth_element
 
+// When need to make unordered_map using pair as key, 
+// we can either define a hash function, but also can just use
+// nested unordered_map.
+unordered_map<int, unordered_map<int, int>> data;
+data[first][second] = val;
+
 // BidirIt partition( BidirIt first, BidirIt last, UnaryPredicate p );
 // returns iterator to the first element of the second group.
 // O(N)
@@ -83,6 +89,11 @@ std::set_difference
 std::back_inserter
 std::rotate
 
+std::to_string
+std::stoi
+std::stol
+std::stof
+std::stod
 std::isdigit
 std::islower
 std::isupper

@@ -33,3 +33,48 @@ public:
   }
   
 };
+
+
+
+
+class Solution {
+public:
+  void cleanRoom(Robot& robot) {
+    
+    unordered_map<int,unordered_map<int, int>> visit;
+    vector<int> dir{0,1,0,-1,0};
+    int face = 0;
+    
+    function<void(int,int,int)> doDFS = 
+      [&](int x, int y, int face) -> void {
+      
+      if(visit[x][y])
+        return;
+        
+      visit[x][y] = 1;
+      robot.clean();
+      
+      for(int k=0; k<4; ++k) {
+        int xx = x + dir[face%4];
+        int yy = y + dir[(face+1)%4];
+        
+        // keep the original facing when exit
+        if(robot.move()) {
+        
+          doDFS(xx, yy, face);
+          robot.turnRight();
+          robot.turnRight();
+          robot.move();
+          robot.turnLeft();
+          robot.turnLeft();
+          
+        }
+        
+        robot.turnRight();
+        face = (face+1)%4;
+      }
+    };
+    
+    doDFS(0,0,0); 
+  }
+};
