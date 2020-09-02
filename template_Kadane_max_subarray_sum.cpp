@@ -5,6 +5,9 @@ class Solution {
       int res = INT_MIN;
       int cur = 0;
 
+      // It applies to postive and negative numbers 
+      // and the final length of max sub array is flexible
+      
       // cur holds so far accumulated sum, but 
       // reset to 0 if it's negative, because
       // start over from the next node is always better!
