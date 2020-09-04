@@ -11,6 +11,10 @@ public:
     for(int i=0; i<nums.size(); ++i) {
       
       prod *= nums[i];
+      // Key is here: everytime a new element comes in,
+      // use this new element as anchor, we have i-left+1 subarrays
+      // Just need to check if it's more than K, if so,
+      // gradually kicks out the left elements
       while(left <= i and prod >= k) {
         prod /= nums[left++];
       }
