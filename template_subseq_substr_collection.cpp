@@ -56,6 +56,40 @@ int longest_common_subsequence(string p, string q){
   return dp[m][n];
 }
 
+// Construct the longest common subsequence
+string LCS_print(string str1, string str2) {
+	int sz1 = str1.size();
+	int sz2 = str2.size();
+
+	vector<vector<int>> dp(sz1+1, vector<int>(sz2+1, 0));
+
+	for(int i=1; i<=sz1; ++i) {
+		for(int j=1; j<=sz2; ++j) {
+			if(str1[i-1] == str2[j-1]) {
+				dp[i][j] = dp[i-1][j-1] + 1;
+			}
+			else {
+				dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+			}
+		}
+	}
+
+  // Here we construct the LCS from back to front
+	deque<char> res;
+	int i=sz1;
+	int j=sz2;
+
+	while(i and j) {
+		char c;
+		if(str1[i-1] == str2[j-1]) c = str1[--i] = str2[--j];
+		else if(dp[i][j] == dp[i-1][j]) --i;
+		else if(dp[i][j] == dp[i][j-1]) --j;
+
+		res.emplace_front(c);
+	}
+
+	return {res.begin(), res.end()};
+}
 // -------------------------------
 // longest common substr
 // -------------------------------
@@ -66,17 +100,20 @@ int longest_common_substring(string p, string q){
   int m =  p.size(), n =  q.size();
 
   vector<vector<int>> dp(m+1, vector<int>(n+1, 0));
+  int res = 0;
 
   for(int i=1; i<=m; ++i){
     for(int j=1; j<=n; ++j){
+      // only when they match, we contiue
+      // otherwise, keep 0 as the len.
       if(p[i-1] == q[j-1])
         dp[i][j] = dp[i-1][j-1] + 1;
-      else
-        dp[i][j] = 0;
+
+      res = max(res, dp[i][j]);
     }
   }
 
-  return dp[m][n];
+  return res;
 }
 
 // -------------------------------
@@ -135,4 +172,43 @@ bool isSubsequence(string s, string t) {
 	}
 	
 	return left == s.size();
+}
+
+
+// -------------------------------
+// shortest common supersequnce
+// -------------------------------
+string shortestCommonSupersequence(string str1, string str2) {
+	int sz1 = str1.size();
+	int sz2 = str2.size();
+
+	vector<vector<int>> dp(sz1+1, vector<int>(sz2+1, 0));
+
+	for(int i=1; i<=sz1; ++i) {
+		for(int j=1; j<=sz2; ++j) {
+			if(str1[i-1] == str2[j-1]) {
+				dp[i][j] = dp[i-1][j-1] + 1;
+			}
+			else {
+				dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+			}
+		}
+	}
+
+	deque<char> res;
+	int i=sz1;
+	int j=sz2;
+
+  // similar to construct LCS, but need to include extra sequence
+	while(i or j) {
+		char c;
+		if(i==0) c = str2[--j];
+		else if(j==0) c = str1[--i];
+		else if(str1[i-1] == str2[j-1]) c = str1[--i] = str2[--j];
+		else if(dp[i][j] == dp[i-1][j]) c = str1[--i];
+		else if(dp[i][j] == dp[i][j-1]) c = str2[--j];
+		res.emplace_front(c);
+	}
+
+	return {res.begin(), res.end()};
 }
