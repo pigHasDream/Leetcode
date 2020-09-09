@@ -45,3 +45,40 @@ public:
     return -1;
   }
 };
+
+
+// Note that this problem can visit the same node multiple times!
+// So, the repeatation check is just to check the same state and new node!
+// We don't need to check state | (1<<nxt), as this may have re-visited!
+
+class Solution {
+public:
+  int shortestPathLength(vector<vector<int>>& graph) {
+    
+    queue<pair<int, int>> que;
+    vector<vector<int>> visit(graph.size(), vector<int>(1<<graph.size(), 0));
+    for(int i=0; i<graph.size();++i)
+      que.emplace(i, 1<<i);
+    
+    int step = 0;
+    
+    while(que.size()) {
+      for(int k=que.size(); k>0; --k) {
+        auto [node, state] = que.front();
+        que.pop();
+        if(state == (1<<graph.size())-1)
+          return step;
+        
+        if(visit[node][state]) continue;
+        visit[node][state] = 1;
+
+        for(const auto& nxt : graph[node]) {
+          que.emplace(nxt, state | (1<<nxt));
+        }
+      }
+      ++step;
+    }
+
+    return -1;
+  }
+};

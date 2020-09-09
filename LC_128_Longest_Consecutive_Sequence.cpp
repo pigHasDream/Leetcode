@@ -3,6 +3,10 @@ public:
   int longestConsecutive(vector<int>& nums) {
     unordered_set<int> hash(nums.begin(), nums.end());
     
+    // Key for this problem is:
+    // as long as a number belongs to a group,
+    // it'll be ok to just erase it!
+    
     int res = 0;
     for(const auto& n : nums) {
       // some numbers are already removed!
