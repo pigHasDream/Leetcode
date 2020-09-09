@@ -3,6 +3,13 @@ public:
   int shortestSubarray(vector<int>& A, int K) {
     int sz = A.size();
     int sum = 0;
+    // Because the array contains negative numbers,
+    // classical sliding window won't work out as it's not monotonic.
+    // Now, to tackle with the "left" pointer issue, we can artificially
+    // create a "monotonic" array, which only records increasing "discrete"
+    // indexes. So that the sliding window feature still holds inside the queue.
+    // 
+    //
     // pair<prefixSum, index>
     // deque is monotonically increasing
     deque<pair<int,int>> que;
