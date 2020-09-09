@@ -25,6 +25,48 @@ public:
 class Solution {
 public:
   double knightProbability(int N, int K, int r, int c) {
+    
+    vector<pair<int,int>> dir{{2,1}, {2,-1}, {-2,1}, {-2,-1},
+                              {1,2}, {1,-2}, {-1,2}, {-1,-2}};
+    
+    // at (x,y) and the remaining H steps, what is the 
+    // count onboard
+    double memo[26][26][101];
+    memset(memo, -1, sizeof memo);
+    
+    // doDFS returns count on board
+    function<double(int,int,int)> doDFS =
+      [&](int x, int y, int step) -> double {
+      
+      if(step == K)
+        return 1;
+      
+      double& ans = memo[x][y][step];
+      if(ans >= 0) return memo[x][y][step];
+      
+      ans = 0;
+      
+      for(int s=0; s<8; ++s) {
+        int nx = x+dir[s].first;
+        int ny = y+dir[s].second;
+        
+        if(nx<0 or nx>=N or ny<0 or ny>=N) continue;
+        
+        ans += doDFS(nx, ny, step+1);
+      }
+      
+      return ans;
+    };
+
+    return doDFS(r,c,0)/double(pow(8,K));
+    
+  }
+};
+
+
+class Solution {
+public:
+  double knightProbability(int N, int K, int r, int c) {
     // The bottom up solution is to accumulate for each position
     // What is the count up to now.
     // This is essentially a BFS process: start from the r, c source
