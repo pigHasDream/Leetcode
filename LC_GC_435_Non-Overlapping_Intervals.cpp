@@ -2,10 +2,13 @@
 //
 // Sort by start:
 // We traverse through the list, key is to update the "last" pointer based on greedy manner:
-// if the current end is shorter than last end, we update the last to current, bacause it'll have less chance to overlap with upcoming elements. Otherwise we keep the last pointer unchanged!
+// if the current end is shorter than last end, we update the last to current, 
+// bacause it'll have less chance to overlap with upcoming elements. Otherwise we keep the last pointer unchanged!
 //
 // Sort by end:
-// We traverse through the list, key is this traversal implicitly keep the first end segment prioritized and checked first. So any upcoming overlap discovered, we always kicks the new one, and keep the last pointer.
+// We traverse through the list, key is this traversal implicitly keep the first end segment 
+// prioritized and checked first. 
+// So any upcoming overlap discovered, we always kicks the new one, and keep the last pointer.
 
 
 // ---------------------------------------------------------------------------------
@@ -68,5 +71,34 @@ public:
     
     return res;
 
+  }
+};
+
+
+
+// -----------------------------------------------------------------------------------
+// Sort by end and use total size to subtract the max schedule result!
+class Solution {
+public:
+  int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+    // max scheduling: find the max number of non conflict!
+    // use total num to subtract the non-overlap ones
+      
+    sort(intervals.begin(), intervals.end(), [](const auto& a, const auto& b){
+      if(a.back() == b.back()) 
+        return a.front() < b.front();
+      return a.back() < b.back();
+    });
+    
+    int maxNum = 0;
+    int prev = INT_MIN;
+    for(const auto& intv : intervals) {
+      if(prev <= intv.front()) {
+        ++maxNum;
+        prev = intv.back(); 
+      }
+    }
+    
+    return intervals.size() - maxNum;
   }
 };

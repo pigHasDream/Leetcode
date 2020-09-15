@@ -1,21 +1,23 @@
 class Solution {
 public:
   vector<vector<int>> merge(vector<vector<int>>& intervals) {
-    if(intervals.empty()) return {};
-    
-    sort(intervals.begin(), intervals.end(), [](const auto& a, const auto& b) {return a[0] < b[0];});
-    
     vector<vector<int>> res;
-    res.emplace_back(intervals.front());
     
-    for(int i=1; i<intervals.size(); ++i) {
-      if(res.back().back() < intervals[i].front()) {
-        res.emplace_back(intervals[i]);
+    sort(intervals.begin(), intervals.end(), [](const auto& a, const auto& b){
+      if(a.front() == b.front()) 
+        return a.back() < b.back();
+      return a.front() < b.front();
+    });
+    
+    for(const auto& interv : intervals) {
+      if(res.empty() or res.back().back() < interv.front()) {
+        res.emplace_back(interv);
       }
       else {
-        res.back().back() = max(res.back().back(), intervals[i].back());
+        res.back().back() = max(res.back().back(), interv.back());
       }
     }
+    
     return res;
   }
 };
