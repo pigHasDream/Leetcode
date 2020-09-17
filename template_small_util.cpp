@@ -268,3 +268,16 @@ int numSub(string s) {
 	return res;
 }
 
+//-----------------------------------------------------
+// equal_range below finds the iterator range of a sorted intervals that INTERSECTS with newInterval!
+// Note that we use a.back() < b.front() to strictly compare the non-intersected part
+// **************************************************************************************************
+// That means it returns all interval v that not (v < newInterval) and not (newInterval < v)
+// --> neither v is strictly sits left of newInterval, nor newInterval is strictly sits right of v!
+// **************************************************************************************************
+// So the equal range returns the iterator range that intersect with the newInterval!
+// Refer to LC_GC_57_Insert_Interval.cpp
+
+auto [start, stop] = equal_range(res.begin(), res.end(), newInterval, [](const auto& a, const auto& b){
+  return a.back() < b.front(); 
+});
