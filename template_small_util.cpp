@@ -281,3 +281,17 @@ int numSub(string s) {
 auto [start, stop] = equal_range(res.begin(), res.end(), newInterval, [](const auto& a, const auto& b){
   return a.back() < b.front(); 
 });
+
+lower_bound comparator:
+binary predicate which returns true if the first argument is less than (i.e. is ordered before) the second.
+First argument is the vector type, and second argument is the target value type
+
+upper_bound comparator:
+binary predicate which returns true if the first argument is less than (i.e. is ordered before) the second.
+First argument is the target value type, and second argument is the vector type
+
+
+
+
+
+

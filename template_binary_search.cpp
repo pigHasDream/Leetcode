@@ -28,6 +28,8 @@ int doBinarySearch(int left, int right) {
   }
 
   return left; // or not found
+  // if right == initial value, that means, g(mid) is never satisfied!
+  // So, that hints a failure search
 }
        
 
