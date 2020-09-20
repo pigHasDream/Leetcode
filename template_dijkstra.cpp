@@ -17,7 +17,8 @@ public:
       return a.first < b.first;
     };
     
-    vector<int> res(N+1, INT_MAX/2);
+    const int inf = INT_MAX/2;
+    vector<int> res(N+1, inf);
     
     // pair : {cost, outNode}
     priority_queue<pair<int,int>, vector<pair<int,int>>, decltype(cmp)> que(cmp);
@@ -44,7 +45,7 @@ public:
     }
 
     int ret = *max_element(next(res.begin()), res.end());
-    return ret == INT_MAX/2 ? -1 : ret;
+    return ret == inf ? -1 : ret;
     
   }
 };
