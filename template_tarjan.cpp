@@ -37,6 +37,7 @@ public:
         if(nxt == parent) continue;
         if(not visit[nxt]) {
           doDFS(nxt, node);
+          // Here we update the low link value of node vs the low[nxt]
           low[node] = min(low[node], low[nxt]);
           // below is the key bridge condition!
           if(ids[node]<low[nxt]) {
@@ -44,6 +45,7 @@ public:
           }
         }
         else {
+          // Here we update the low link value of node vs the ids[nxt]
           low[node] = min(low[node], ids[nxt]);
         }
       }

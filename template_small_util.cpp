@@ -72,6 +72,11 @@ map_[k]
 
 // -----------------------------------------------------
 // priority_queue with customized comparator
+// Same for map, or multimap
+// The decltype(cmp) extract the Type of lambda, as it's used as
+// a type of the template.
+// The heap(cmp) is the constructor of priority_queue and map etc, that
+// takes in the comparator functor here.
 
 auto cmp = [](const auto& p1, const auto& p2) { 
               if(p1.first == p2.first) 
@@ -137,6 +142,7 @@ int findManhattanDist(vector<int>& vec) {
 
 std::vector<int>& vec = myNumbers; // use shorter name
 vec.erase(std::remove(vec.begin(), vec.end(), number_in), vec.end());
+vec.erase(std::remove_if(vec.begin(), vec.end(), [](const auto& a){return a == number_in;}), vec.end());
 
 // -----------------------------------------------------
 // CPP remove unordered_map or unordered_set in a loop
