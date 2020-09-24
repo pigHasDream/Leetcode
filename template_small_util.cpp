@@ -92,6 +92,8 @@ priority_queue<pair<int, string>, vector<pair<int, string>>, decltype(cmp)> heap
 // Get count of pairs of a sorted array that each pair
 // has difference smaller than a given number
 // This is a 2-pointer O(N) scan using the monotone nature
+// The count summation can be understood as: use the boundary, 
+// how many subarrays: just the length
 
 for(int start=0, end=0; start<nums.size(); ++start) {
 	while(end<nums.size() and nums[end]-nums[start] <= target) ++end;
@@ -106,8 +108,10 @@ bool isValid(const string& s) {
 	for(const auto& c : s) {
 		if(c=='(') ++count;
 		if(c==')') --count;
+    // two cases: inside loop, never becomes negative
 		if(count<0) return false;
 	}
+  // outside loop, never becomes non-zero
 	return count == 0;
 }
 
@@ -115,7 +119,7 @@ bool isValid(const string& s) {
 // -----------------------------------------------------
 // Check how many ( and ) need to be removed! LC301
 int left = 0, right = 0;
-// This counts how many ( and ) need to be removed
+// This counts how many ( and ) need to be removed, respectively
 for(const auto& c : s) {
   left += c=='(';
   if(left == 0) 
@@ -247,6 +251,7 @@ N*(N-1)
 
 // -----------------------------------------------------
 // Count number of sub arrays in a 1-D vector that all 1s
+// Consecutive subarray counts can be just sum of running length!
 int res = 0, length = 0;
 for (int i = 0; i < A.length; ++i) {
   length = (A[i] == 0 ? 0 : length + 1);
