@@ -14,6 +14,9 @@ public:
     
 		// the boundary condition is checked through the subscription
     // of dp[i-1][j-1] in the loop!
+    // This DP transition actually has inf or numbers mixed in the 
+    // DP table! inf here refers to invalid!
+    // any real number may be pointing to the real results!
     
     for(int i=1; i<=sizeT; ++i)
       dp[0][i] = inf;
@@ -24,6 +27,10 @@ public:
           dp[i][j] = dp[i-1][j-1] + 1;
         }
         else {
+          // per definition, if i-th is not the same,
+          // we have to rely on the earlier dp[i-1][j],
+          // BUT, because we require to use i-th bit by definition!
+          // So, we also add a 1 to the dp[i][j];
           dp[i][j] = dp[i-1][j] + 1;
         }
       }
