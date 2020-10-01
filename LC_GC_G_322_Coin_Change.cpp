@@ -1,54 +1,61 @@
+// This problem can use infinite number of the same elem.
+// DFS without memo can also work if we do pruning smartly!
+// Key here is we "fast track" the repeat case!
 class Solution {
 public:
   int coinChange(vector<int>& coins, int amount) {
     
-    const int inf = INT_MAX/2;
+    const int inf = INT_MAX>>1;
+    int res = inf;
+    
     sort(coins.rbegin(), coins.rend());
     
-    int minCount = inf;
-    vector<vector<int>> memo(amount+1, vector<int>(coins.size(), -1));
-    
-    function<int(int,int,int)> doDFS = 
-      [&](int idx, int curSum, int curCount) {
-      if(curSum > amount) return inf;
-      if(curCount > minCount) return inf;
-      if(idx == coins.size()) return inf;
+    function<void(int,int,int)> doDFS =
+      [&](int idx, int curSum, int count) {
+      if(curSum > amount) return;
       
       if(curSum == amount) {
-        minCount = min(minCount, curCount);
-        return curCount;
+        res = min(res, count);
+        return;
       }
       
-      int& ans = memo[curSum][idx];
-      if(ans != -1) return ans;
+      if(idx == coins.size()) return;
       
-      return ans = min(doDFS(idx, curSum+coins[idx], curCount+1),
-                       doDFS(idx+1, curSum, curCount));
+      // Here we fast track the repeat!
+      for(int repeat = (amount-curSum)/coins[idx]; repeat>=0; --repeat) {
+        // If ever the count is worse, we don't go further as 
+        // It's only going to be worse!
+        if(count + repeat > res) break;
+        doDFS(idx+1, curSum + coins[idx]*repeat, count+repeat);
+      }
     };
+     
+    doDFS(0, 0, 0);
 
-    int ret = doDFS(0,0,0);
-    return ret >= inf ? -1 : ret;
-    
+    return res >= inf ? -1 : res;
   }
 };
 
 
 
-    int coinChange(vector<int>& coins, int amount) {
-        if(amount == 0) return 0;
-       vector<int> res(amount + 1, 0);
-    return coinChange2(coins, amount, res);
+// This problem is more suitable for just DP solution
+class Solution {
+public:
+  int coinChange(vector<int>& coins, int amount) {
+    const int inf = INT_MAX >> 1;
+    // dp[i] refers to the min count of coins
+    // to make sum of i amount
+    vector<int> dp(amount+1, inf);
+    dp[0] = 0;
+    
+    for(int i=1; i<=amount; ++i) {
+      for(const auto& c : coins) {
+        if(c > i) continue;
+        
+        dp[i] = min(dp[i], dp[i-c] + 1);
+      }
     }
-   int coinChange2(vector<int>& coins, int amount, vector<int>& res){
-        if(amount < 0) return -1;
-        if(amount == 0) return 0;
-        if(res[amount]) return res[amount];
-       int temp = INT_MAX;
-        for(int i = 0; i < coins.size(); i++){
-            int k = coinChange2(coins, amount - coins[i], res);
-            if(k == -1) continue;
-            temp = min(temp, 1 + k);
-        }
-       res[amount] = (temp == INT_MAX) ? -1 : temp;
-        return res[amount];
-    }
+
+    return dp.back() >= inf ? -1 : dp.back();
+  }
+};

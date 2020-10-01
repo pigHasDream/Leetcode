@@ -1,3 +1,4 @@
+//----------------------------------------------------
 class Solution {
 public:
   vector<vector<int>> permute(vector<int>& nums) {
@@ -38,4 +39,36 @@ private:
     }
   }
   
+};
+
+//----------------------------------------------------
+class Solution {
+public:
+  vector<vector<int>> permute(vector<int>& nums) {
+    
+    vector<vector<int>> res;
+    vector<int> curSol;
+    vector<int> visit(nums.size(), 0);
+    
+    function<void()> doDFS = [&](){
+      if(curSol.size() == nums.size()) {
+        res.emplace_back(curSol);
+        return;
+      }
+      
+      for(int i=0; i<nums.size(); ++i) {
+        if(visit[i]) continue;
+        
+        visit[i] = 1;
+        curSol.emplace_back(nums[i]);
+        doDFS();
+        curSol.pop_back();
+        visit[i] = 0;
+      }
+    };
+    
+    doDFS();
+    
+    return res;
+  }
 };

@@ -302,6 +302,20 @@ binary predicate which returns true if the first argument is less than (i.e. is 
 First argument is the target value type, and second argument is the vector type
 
 
+// cpp string
+string::find 
+string::find_last_of
+string::find_first_of
+string::find_first_not_of
+string::find_last_not_of
+
+string::substr();
+  basic_string substr( size_type pos = 0, size_type count = npos ) const;
+  constexpr basic_string substr( size_type pos = 0, size_type count = npos ) const;
+
+
+
+
 
 
 
