@@ -279,6 +279,18 @@ int numSub(string s) {
 	return res;
 }
 
+// ----------------------------------------------------
+// C++ string split to vector of substrings by '/'
+vector<string> parser(string path) {
+	replace_if(path.begin(), path.end(), [](auto& c){return c=='/';}, ' ');
+	stringstream ss(path);
+	string tmp;
+	vector<string> res;
+	while(ss >> tmp) {
+		res.emplace_back(tmp);
+	}
+	return res;
+}
 //-----------------------------------------------------
 // equal_range below finds the iterator range of a sorted intervals that INTERSECTS with newInterval!
 // Note that we use a.back() < b.front() to strictly compare the non-intersected part
