@@ -1,4 +1,124 @@
 class LFUCache {
+  unordered_map<int,int> key2value_;
+  unordered_map<int,int> key2freq_;
+  unordered_map<int,list<int>> freq2list_;
+  unordered_map<int,list<int>::iterator> key2iter_;
+  
+  const int cap_;
+  int minFreq_;
+  
+public:
+  LFUCache(int capacity):
+  cap_(capacity),
+  // TODO
+  minFreq_(0)
+  { }
+
+  int get(int key) {
+    if(key2value_.count(key) == 0)
+      return -1;
+    
+    int ret = key2value_[key];
+    
+    int freq = key2freq_[key];
+    freq2list_[freq].erase(key2iter_[key]);
+    // When freq == minFreq_ and it's the last element
+    // We update the minFreq_
+    if(minFreq_ == freq and freq2list_[freq].empty()) {
+      freq2list_.erase(freq);
+      ++minFreq_;
+    }
+    
+    freq2list_[freq+1].emplace_back(key);
+    key2iter_[key] = prev(freq2list_[freq+1].end());
+    key2freq_[key] = freq+1;
+
+    return ret;
+  }
+
+  
+  void put(int key, int value) {
+    
+    if(cap_ == 0) return;
+    if(get(key) != -1) {
+      key2value_[key] = value;
+      return; 
+    }
+
+    // evict
+    if(key2value_.size() == cap_) {
+      int toRemoveKey = freq2list_[minFreq_].front();
+      key2value_.erase(toRemoveKey);
+      key2freq_.erase(toRemoveKey);
+      key2iter_.erase(toRemoveKey);
+      freq2list_[minFreq_].pop_front(); 
+      if(freq2list_[minFreq_].empty())
+        freq2list_.erase(minFreq_);
+    }
+    
+    // add new value
+    minFreq_ = 1;
+    key2value_[key] = value;
+    freq2list_[1].emplace_back(key);
+    key2freq_[key] = 1;
+    key2iter_[key] = prev(freq2list_[1].end());
+  }
+};
+
+
+/*
+
+a. put 
+  1. insert new elem, cap is not reached
+  2. insert new elem, cap is reached, need to evict one elem
+  3. not new elem, alrady exists, just update freq, order, and value
+  
+b. get
+  1. if elem is not in cache, return -1
+  2. if elem is in, return, and update freq and order
+      i) remove key from original list
+      ii) append it to freq+1 list
+      iii) key2freq update
+      iv) key2iter update
+      v) freq2list update (if list is empty)
+
+
+freq2   
+(key1 key2) 
+
+freq3
+(key3 key4)   -> key4
+
+freq4
+(key5 key6)
+
+
+freq -> list
+keys -> values
+key  -> freq
+key -> iter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class LFUCache {
   int cap_;
   int minFreq_;
   // key -> <value, freq>
