@@ -3,6 +3,7 @@
 // -------------------------------
 // N^2 typical DP: 2 level loop,
 // 1-D space. 
+// This is stricly increasing!!!
 int lengthOfLIS(vector<int>& nums) {
 
   int size = nums.size();
@@ -24,6 +25,12 @@ int lengthOfLIS(vector<int>& nums) {
 	// Key observation:
 	// patience sorting, the top card of each pile forms an increasing order by following the rule.
   // each pile itself decreases, if new card cannot be put, put it in new pile
+  // 
+  //
+  // Alternatively! Think about greedy!
+  // If the new number n is not able to extend the current res lenghth,
+  // the best it can do is to LOWER the height of the elements in res.
+  // So that later on it may have more chance to see a drop!
 
 	vector<int> res;
 	for(const auto& n : nums) {
