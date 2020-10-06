@@ -129,6 +129,9 @@ vector::erase // actual delete element by iterator or position!
 // memcpy
 void* memcpy( void* dest, const void* src, std::size_t count );
 
+// get int/long etc how many 1 bit
+__builtin_popcount(theInt_Long_val)
+
 // sizeof
 sizeof(type);
 sizeof expression;
