@@ -118,3 +118,67 @@ public:
   }
   
 };
+
+
+// ---------------------------------------------------------
+// BFS approach better
+// KEY: this is a combination problem: keep or remove a char 
+// from the original stirng.
+// Therefore, the visit check can be saved by using an index
+// keeper. So we push que a pair with index.
+// Now, By doing that, we can further skip the neighboring 
+// 2 chars with the same value, so it won't need to be put.
+class Solution {
+public:
+  vector<string> removeInvalidParentheses(string s) {
+    // OPT 1
+    // book keep the start index, so 
+    // we never re-visit from the same place
+    // This can save the use of visit hash!!
+    // This is a combination problem not permutation!
+    // Therefore, we can use index to avoid duplication!
+    queue<pair<string,int>> que;
+    que.emplace(s,0);
+    
+    vector<string> res;
+    
+    auto isValid = [&](const auto& str) {
+      int count = 0;
+      for(const auto& c : str) {
+        if(c=='(') ++count;
+        else if(c==')') --count;
+        if(count < 0) return false;
+      }
+      return count == 0;
+    };
+    
+    bool found = false;
+    while(que.size()) {
+      for(int k=que.size(); k>0; --k) {
+        auto [str, idx] = que.front();
+        que.pop();
+        
+        if(isValid(str)) {
+          found = true;
+          res.emplace_back(str);
+          continue;
+        }
+        
+        if(not found) {
+          for(int i=idx; i<str.size(); ++i) {
+            if(str[i]!='(' and str[i]!=')') continue;
+            
+            // OPT 2
+            if(i!=idx and str[i] == str[i-1]) continue;
+            
+            auto nxt = str;
+            nxt.erase(i, 1);
+            que.emplace(nxt, i);
+          }
+        }
+      }
+    }
+    
+    return res;
+  }
+};
