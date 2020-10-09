@@ -280,6 +280,21 @@ int numSub(string s) {
 }
 
 // ----------------------------------------------------
+// subset sum: number of ways to pick subset of elem 
+// to get the target sum
+
+vector<int> dp(target+1, 0);
+dp.front() = 1;
+
+// This is the backward 1-D dp.
+for(int i=0; i<nums.size(); ++i) 
+  for(int sum=target; sum>=nums[i]; --sum)
+    dp[sum] += dp[sum-nums[i]];
+
+return dp.back();
+
+
+// ----------------------------------------------------
 // C++ string split to vector of substrings by '/'
 vector<string> parser(string path) {
 	replace_if(path.begin(), path.end(), [](auto& c){return c=='/';}, ' ');
