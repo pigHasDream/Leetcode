@@ -287,6 +287,7 @@ vector<int> dp(target+1, 0);
 dp.front() = 1;
 
 // This is the backward 1-D dp.
+// This is knapsack!!
 for(int i=0; i<nums.size(); ++i) 
   for(int sum=target; sum>=nums[i]; --sum)
     dp[sum] += dp[sum-nums[i]];
