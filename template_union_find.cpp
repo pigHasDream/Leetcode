@@ -29,6 +29,10 @@ public:
   }
   
   int Find(int u) {        
+    /* if we assign -1 to each of the parent value,
+     * then in below when parents_[u] == -1, we should
+     * return u instead of -1. So that they can be compared.
+     * */
     if (u != parents_[u])
       parents_[u] = Find(parents_[u]);        
 

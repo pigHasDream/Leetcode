@@ -2,15 +2,16 @@
 vector<int> inorderTraversal(TreeNode* root) {
   vector<int> res;
   auto rt = root;
-  stack<TreeNode*> st;
+  stack<TreeNode*> stc;
 
-  while(rt or st.size()) {
+  while(rt or stc.size()) {
     while(rt) {
-      st.push(rt);
+      stc.emplace(rt);
       rt = rt->left;
     }
 
-    auto top = st.top(); st.pop();
+    auto top = stc.top(); stc.pop();
+
     rt = top->right;
     // do something to the popped top elem
     res.emplace_back(top->val);

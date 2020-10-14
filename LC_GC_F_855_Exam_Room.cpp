@@ -1,4 +1,50 @@
 class ExamRoom {
+  set<int> pos_;
+  const int total_;
+  
+public:
+  ExamRoom(int N) : total_(N) { }
+
+  int seat() {
+    int prevPos = 0, maxDist = 0;
+    int idx = 0;
+    
+    for(const auto& pos : pos_) {
+      if(prevPos == 0) {
+        maxDist = pos;
+        idx = 0;
+      }
+      else if((pos-prevPos+1)/2 > maxDist) {
+        maxDist = (pos - prevPos+1)/2;
+        idx = prevPos + maxDist-1;
+      }
+      prevPos = pos+1;
+    }
+    
+    if(prevPos > 0 and total_ - prevPos > maxDist) {
+      idx = total_-1;
+    }
+      
+    pos_.emplace(idx);
+    return idx; 
+  }
+
+  void leave(int p) {
+    pos_.erase(p);
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+class ExamRoom {
   
   set<int> room_;
   int seatSize_;
