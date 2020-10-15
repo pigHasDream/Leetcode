@@ -103,6 +103,9 @@ public:
         heights.emplace(absHeight);
       }
       else {
+        // here we have to use .find then erase this iter
+        // this is multiset, if we direclty call the absHeight,
+        // it erases all keys with same value!
         heights.erase(heights.find(absHeight));
         // If the deleted one is higher than the BST top, we have a descending
         if(absHeight > *heights.begin()) {

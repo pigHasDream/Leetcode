@@ -5,7 +5,9 @@ public:
   string serialize(TreeNode* root) {
     string data;
     
-    function<void(TreeNode*)> doPreOrder = [&](TreeNode* rt) {
+    function<void(TreeNode*)> doPreOrder
+      = [&](TreeNode* rt) {
+
       if(rt==nullptr) return;
       
       char buf[sizeof(int)];
@@ -27,7 +29,9 @@ public:
     
     int pos = 0;
     
-    function<TreeNode*(int,int)> doRecursion = [&](int minVal, int maxVal) -> TreeNode* {
+    function<TreeNode*(int,int)> doRecursion
+      = [&](int minVal, int maxVal) -> TreeNode* {
+
       if(pos >= data.size()) 
         return nullptr;
       
@@ -53,3 +57,8 @@ public:
   }
   
 };
+
+
+
+
+
