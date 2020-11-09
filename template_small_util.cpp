@@ -87,6 +87,34 @@ auto cmp = [](const auto& p1, const auto& p2) {
 
 priority_queue<pair<int, string>, vector<pair<int, string>>, decltype(cmp)> heap(cmp);
 
+// -----------------------------------------------------
+// std::set with customized comparator
+// Same as priority_queue!!
+// Here we have to FULLY define the relation in order to use it as a HASH 
+// to remove duplication correctly!!
+auto cmp = [](const auto& a, const auto& b) {
+  if(a.second == b.second)
+    return a.first < b.first;
+  return a.second < b.second;
+};
+
+std::set<pair<int,int>, decltype(cmp)> theSet(cmp);
+// See below example, the pair<int,int> stores the 2 indexes of the 
+// 2 arrays.
+// Refer to LC.373
+
+auto cmp = [&](const pair<int,int>& a, const pair<int,int>& b) {
+  int sum1 = nums1[a.first] + nums2[a.second];
+  int sum2 = nums1[b.first] + nums2[b.second];
+  if(sum1 == sum2) {
+    if(a.first == b.first)
+      return a.second < b.second;
+    return a.first < b.first;
+  }
+  return sum1 < sum2;
+};
+
+set<pair<int,int>, decltype(cmp)> theSet(cmp);
 
 // -----------------------------------------------------
 // Get count of pairs of a sorted array that each pair
@@ -294,7 +322,26 @@ for(int i=0; i<nums.size(); ++i)
 
 return dp.back();
 
+// ----------------------------------------------------
+// In a sorted ascending number array, what is the
+// number of pairs that the pair-difference is no bigger than mid;
+// O(n)
+//
+int count = 0;
+// 2-pointers, sorted array! every time j exits,
+// we can continue the j, no need to start from 0 for j!!
+for(int i=0, j=0; i<nums.size(); ++i) {
+  while(j<nums.size() and nums[j]-nums[i]<=mid)
+    ++j;
 
+  count += j-i-1;
+}
+
+// ----------------------------------------------------
+// Search an element in a matrix where the row and column
+// each is sorted ascending order respectively!
+// We can then use a O(N+M) anti-diagnal search
+//
 // ----------------------------------------------------
 // C++ string split to vector of substrings by '/'
 vector<string> parser(string path) {
