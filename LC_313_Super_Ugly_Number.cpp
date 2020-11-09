@@ -14,6 +14,9 @@ public:
         theMin = min(theMin, res[ptr[j]]*primes[j]);
       
       for(int k=0; k<primes.size(); ++k) {
+        // Here in order to remove duplications,
+        // We HAVE TO increase the ptr[k] for all the
+        // same values!!
         if(theMin == res[ptr[k]]*primes[k]) {
           ++ptr[k];
         }

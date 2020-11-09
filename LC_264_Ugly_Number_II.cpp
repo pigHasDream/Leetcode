@@ -10,6 +10,10 @@ public:
                        min(ugly[j]*3, ugly[k]*5));
       ugly.emplace_back(theMin);
       
+      // Note here we use 3 parallel if-branches instead of
+      // if-else.
+      // This is to update all the case with same theMin values!!
+      // This avoid the duplications!
       if(theMin == ugly[i]*2) ++i;
       if(theMin == ugly[j]*3) ++j;
       if(theMin == ugly[k]*5) ++k;
