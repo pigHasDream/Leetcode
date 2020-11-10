@@ -1,37 +1,28 @@
 class Solution {
 public:
   vector<int> findClosestElements(vector<int>& arr, int k, int x) {
-    // Note that the right boundary is open!
-    int left = 0, right = arr.size()-k;
     
-    // Key thing is that we search the k range directly!
-    // now we just need to determine the starting index, then
-    // plus k elements.
-    //
-    // mid refers to the starting position.
-    //
-    // !!!
-    // x-arr[mid] > arr[mid+k]-x means arr[mid]~arr[mid+k-1] is worse
-    // than arr[mid+1]~arr[mid+k]. 
-    // !!!
-    //
-    // Here we can ignore all elements
-    // between mid+1 ~ mid+k-1 as they are shared.
+    int low = 0, high = arr.size()-k;
+    // consider a k+1 size window, and the bigger one must need to be
+    // excluded. So the value x-arr[mid] and arr[mid+k]-x comparison
+    // can be used to exclude which end is worse and that one can be 
+    // excluded.
     
-    while(left < right) {
-      int mid = left + (right-left)/2;
-      // Key thing is: we use mid+k instead of mid+k-1 as the right boundary
-      // because we want to test if the right bound is good or not to move further
-      // this is important on tieing case
+    while(low < high) {
+      int mid = low + (high - low)/2;
+      
+      // if left end is bigger, this elem and its left half is invalid
       if(x-arr[mid] > arr[mid+k]-x) {
-        left = mid+1;
+        low = mid+1;   
       }
+      // if right end is bigger, and if left-right ends tie,
+      // we discard the right end
       else {
-        right = mid;
+        high = mid; 
       }
     }
     
-    return vector<int>(left+arr.begin(), left+k+arr.begin());
-
+    return vector<int>(arr.begin()+low, arr.begin()+high+k);
   }
 };
+
