@@ -55,8 +55,12 @@ class Solution {
 public:
   int shortestPathLength(vector<vector<int>>& graph) {
     
+    // <node, curState>
     queue<pair<int, int>> que;
-    vector<vector<int>> visit(graph.size(), vector<int>(1<<graph.size(), 0));
+    // visit[node][state]
+    vector<vector<int>> visit(graph.size(),
+                        vector<int>(1<<graph.size(), 0));
+
     for(int i=0; i<graph.size();++i)
       que.emplace(i, 1<<i);
     

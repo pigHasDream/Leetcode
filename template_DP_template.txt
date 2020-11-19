@@ -1,0 +1,154 @@
+====================================
+Type 1 Basic:
+====================================
+Time series, current state is only depending on previous constant # states
+
+
+Solution:
+0. Typically define the state by using the CURRENT element as the answer.
+1. Using State-Machine type of structure, and shift between states.
+   a) State can be straight forward
+   b) State can also be used-the action, not used the action!
+2. Could have multiple states, but generally O(N) one level 
+3. The action can have an upper limit K (stock sell K times), 
+   this will be another dimension. O(K*N)
+
+
+Code: O(N)
+
+for(int i=1; i<=N; ++i) {
+  dp[i] => something relates to dp[i-1]
+  dp[i][state] => something relates to dp[i-1][state_k]
+}
+
+
+====================================
+Type 2 Basic+:
+====================================
+Time series, but current state is depending on SOME previous days, need to 
+check back! But not necessarily depending on EVERY previous day.
+e.g., sum, min, max, adding count, etc.
+
+
+Solution:
+0. Typically directly define the state as the question, but using the CURRENT
+   element as the last ending one.
+1. Similar to Type 1, but need to go through the inner loop, normally O(N*M)
+2. Outer loop is just the N, each ends at i-th position.
+3. Some small optimizations can be done inside the inner loop.
+
+
+Code: O(N^2)
+
+for(int i=1; i<=N; ++i) {
+  for(int j=1; j<i; ++j) {
+
+    dp[i] = something relates to dp[j]
+
+  }
+}
+
+
+====================================
+Type 3 Double sequence:
+====================================
+dp[i][j]: normally s[0:i] and t[0:j]
+
+Solution:
+0. Normally dp[i][j] = dp[i-1][j], dp[i][j-1], dp[i-1][j-1]
+1. Direct definition upto or ends at i-th or j-th bit.
+
+
+
+Code: O(N^2)
+
+for(int i=1; i<=N; ++i) {
+  for(int j=1; j<=M; ++j) {
+    dp[i][j] => something relates to dp[i-1][j], dp[i[j-1], dp[i-1][j-1]
+  }
+}
+
+====================================
+Type 4 Zoning to K group DP:
+====================================
+Separate a range into K CONSECUTIVE groups, find some property.
+
+Solution:
+Split dp[i][k] = dp[j-1][k-1] and s[j:i]
+Looking at k-1 groups, and scan through up to j-1 position.
+
+
+     k-1 groups         The k-th group
+xxxxxxxxxxxxxxxxxxxx  j xxxxxxxxxxxxx i     => j scans from i down to 0
+\__________________/ \________________/
+    dp[j-1][k-1]       s[j:i]
+
+
+Code: O(N*K*K)
+
+for(int i=1; i<=N; ++i) {
+  for(int k=1; k<=min(i, K); ++k) {
+    for(int j=i; j>=k; --j) {
+      dp[i][k] => something relates to dp[i][k], dp[j-1][k-1], s[j:i];
+    }
+  }
+}
+
+
+Need to watch out for:
+dp[x][0], dp[0][0], etc.
+k=0 means invalid, we can skip or specially handle.
+
+
+====================================
+Type 5 Zone DP:
+====================================
+Just a single string, there may be overlapped zones etc.
+
+
+Solution:
+dp[i][j] = the solution of string between i-th and j-th positions
+Need to first solve smaller length problem, then solve larger length problem!
+That's why we start by solving len in the first loop!
+
+
+ _____________ dp[i][j] ____________
+/                                   \
+i xxxxxxxxxxxxxxxxxx k xxxxxxxxxxxxx j     => k scans between i to j
+\__________________/   \____________/
+    dp[i][k-1]           dp[k+1][j] 
+
+Code: O(N^2)
+
+for(int len=1; len<=N; ++len) {   // total len
+  for(int i=1; i+len-1<=N; ++i) { // start index
+    int j = i+len-1;              // end len
+    
+    for(int k=i; k<=j; ++k) {     // This loop may or may not need
+      dp[i][j] = somthing relates to dp[i+1][j-1] etc smaller than len
+    }
+
+  }
+}
+
+
+====================================
+Type 6 Knapsack 0-1
+====================================
+Pick certain elements, under total constraints, eventually get max/count/min
+
+Solution:
+dp[i][c] consider up to i-th element, total constraint/size is c
+dp[i][c] can be from dp[i-1][c] which didn't actually take i-th, or 
+         can be from dp[i-1][c-w_i] + p_i, here we remove extra room from c.
+
+
+for(int i=0; i<N; ++i) {    // index of things
+  for(int c=0; c<C; ++c) {  // size
+    dp[i][c] = dp[i-1][c];
+    if(c>=w[i])
+      dp[i][c] = max(dp[i][c], dp[i-1][c-w[i]] + p[i]);
+  }
+}
+
+https://www.kancloud.cn/kancloud/pack/70124

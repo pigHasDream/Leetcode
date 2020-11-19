@@ -390,6 +390,17 @@ string::substr();
 
 
 
+// --------------------------------------------------
+// DP bit masking small util
+// We can use (x >> i) & 1 to get i-th bit in state x, where >> is the right shift operation.
+// If we are doing this in an if statement (i.e. to check whether the i-th bit is 1), 
+// we can also use x & (1 << i), where the << is the left shift operation.
+// 
+// We can use (x & y) == x to check if x is a subset of y.
+// The subset means every state in x could be 1 only if the corresponding state in y is 1.
+// 
+// We can use (x & (x >> 1)) == 0 to check if there are no adjancent valid states in x.
+
 
 
 
