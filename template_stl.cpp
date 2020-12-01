@@ -1,7 +1,23 @@
 std::lower_bound
 std::upper_bound
 std::binary_search
+
+// quick selection based, ensures the elements from begin
+// to n-th are in order.
 std::nth_element
+
+// This has a return a pair of iter and bool
+// If the element exists, it won't create it, and return false.
+std::map::emplace
+std::set::emplace
+std::unordered_map::emplace
+std::unordered_set::emplace
+
+// below emplace always return the iterator
+std::multiset::emplace
+std::multimap::emplace
+std::vector::emplace
+
 
 // When need to make unordered_map using pair as key, 
 // we can either define a hash function, but also can just use
