@@ -1,3 +1,6 @@
+#include <numeric>
+#include <vector>
+#include <string>
 
 class UnionFindSet {
 public:
@@ -30,13 +33,13 @@ public:
   
   int Find(int u) {        
     /* if we assign -1 to each of the parent value,
-     * then in below when parents_[u] == -1, we should
+     * then in below when parent_[u] == -1, we should
      * return u instead of -1. So that they can be compared.
      * */
-    if (u != parents_[u])
-      parents_[u] = Find(parents_[u]);        
+    if (u != parent_[u])
+      parent_[u] = Find(parent_[u]);        
 
-    return parents_[u];
+    return parent_[u];
   }
 
   int CountUnion() {
@@ -48,7 +51,7 @@ public:
   }
 
 private:
-  vector<int> parents_;
-  vector<int> ranks_;
+  std::vector<int> parent_;
+  std::vector<int> ranks_;
 };
 
